@@ -1,7 +1,55 @@
-import { useRef, useMemo, useState } from "react";
+import { useRef, useMemo, useState, useEffect, Component, ReactNode } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { motion, useScroll, useTransform } from "framer-motion";
 import * as THREE from "three";
+
+// Check if WebGL is available
+const isWebGLAvailable = (): boolean => {
+  try {
+    const canvas = document.createElement("canvas");
+    return !!(
+      window.WebGLRenderingContext &&
+      (canvas.getContext("webgl") || canvas.getContext("experimental-webgl"))
+    );
+  } catch (e) {
+    return false;
+  }
+};
+
+// Error Boundary for Canvas
+class CanvasErrorBoundary extends Component<
+  { children: ReactNode; fallback: ReactNode },
+  { hasError: boolean }
+> {
+  constructor(props: { children: ReactNode; fallback: ReactNode }) {
+    super(props);
+    this.state = { hasError: false };
+  }
+
+  static getDerivedStateFromError() {
+    return { hasError: true };
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return this.props.fallback;
+    }
+    return this.props.children;
+  }
+}
+
+// Fallback static globe illustration
+const FallbackGlobe = () => (
+  <div className="absolute inset-0 flex items-center justify-center">
+    <div className="relative w-80 h-80 rounded-full border border-primary/20 opacity-30">
+      <div className="absolute inset-4 rounded-full border border-primary/15" />
+      <div className="absolute inset-8 rounded-full border border-primary/10" />
+      <div className="absolute inset-12 rounded-full border border-primary/5" />
+      <div className="absolute top-1/2 left-0 right-0 h-px bg-primary/10" />
+      <div className="absolute left-1/2 top-0 bottom-0 w-px bg-primary/10" />
+    </div>
+  </div>
+);
 
 interface GlobeProps {
   scrollProgress: number;
@@ -156,6 +204,7 @@ export const GlobeSection = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isDragging, setIsDragging] = useState(false);
   const [dragDelta, setDragDelta] = useState({ x: 0, y: 0 });
+  const [webGLSupported, setWebGLSupported] = useState(true);
   const lastMousePos = useRef({ x: 0, y: 0 });
   
   const { scrollYProgress } = useScroll({
@@ -163,9 +212,12 @@ export const GlobeSection = () => {
     offset: ["start end", "end start"],
   });
 
-  const scrollProgress = useTransform(scrollYProgress, [0, 1], [0, 1]);
   const textY = useTransform(scrollYProgress, [0, 0.5, 1], [100, 0, -100]);
   const textOpacity = useTransform(scrollYProgress, [0, 0.3, 0.7, 1], [0, 1, 1, 0]);
+
+  useEffect(() => {
+    setWebGLSupported(isWebGLAvailable());
+  }, []);
 
   const handleMouseMove = (e: React.MouseEvent) => {
     const rect = e.currentTarget.getBoundingClientRect();
@@ -208,25 +260,36 @@ export const GlobeSection = () => {
       onMouseDown={handleMouseDown}
       onMouseUp={handleMouseUp}
       onMouseLeave={handleMouseUp}
-      style={{ cursor: isDragging ? 'grabbing' : 'grab' }}
+      style={{ cursor: webGLSupported && isDragging ? 'grabbing' : webGLSupported ? 'grab' : 'default' }}
     >
       {/* Background gradient */}
       <div className="absolute inset-0 bg-gradient-to-b from-secondary via-secondary to-secondary" />
       
-      {/* 3D Globe */}
+      {/* 3D Globe or Fallback */}
       <div className="absolute inset-0 z-0">
-        <Canvas
-          camera={{ position: [0, 0, 6], fov: 45 }}
-          dpr={[1, 2]}
-        >
-          <ambientLight intensity={0.5} />
-          <Globe 
-            scrollProgress={0} 
-            mousePosition={mousePosition}
-            isDragging={isDragging}
-            dragDelta={dragDelta}
-          />
-        </Canvas>
+        {webGLSupported ? (
+          <CanvasErrorBoundary fallback={<FallbackGlobe />}>
+            <Canvas
+              camera={{ position: [0, 0, 6], fov: 45 }}
+              dpr={[1, 1.5]}
+              gl={{ 
+                antialias: false,
+                powerPreference: "low-power",
+                failIfMajorPerformanceCaveat: true
+              }}
+            >
+              <ambientLight intensity={0.5} />
+              <Globe 
+                scrollProgress={0} 
+                mousePosition={mousePosition}
+                isDragging={isDragging}
+                dragDelta={dragDelta}
+              />
+            </Canvas>
+          </CanvasErrorBoundary>
+        ) : (
+          <FallbackGlobe />
+        )}
       </div>
 
       {/* Content */}

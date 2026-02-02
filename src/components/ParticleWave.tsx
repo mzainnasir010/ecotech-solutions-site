@@ -1,10 +1,50 @@
-import { useRef, useMemo } from "react";
+import { useRef, useMemo, useState, useEffect, Component, ReactNode } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
 
+// Check if WebGL is available
+const isWebGLAvailable = (): boolean => {
+  try {
+    const canvas = document.createElement("canvas");
+    return !!(
+      window.WebGLRenderingContext &&
+      (canvas.getContext("webgl") || canvas.getContext("experimental-webgl"))
+    );
+  } catch (e) {
+    return false;
+  }
+};
+
+// Error Boundary for Canvas
+class CanvasErrorBoundary extends Component<
+  { children: ReactNode; fallback: ReactNode },
+  { hasError: boolean }
+> {
+  constructor(props: { children: ReactNode; fallback: ReactNode }) {
+    super(props);
+    this.state = { hasError: false };
+  }
+
+  static getDerivedStateFromError() {
+    return { hasError: true };
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return this.props.fallback;
+    }
+    return this.props.children;
+  }
+}
+
+// Fallback gradient background
+const FallbackBackground = () => (
+  <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-primary/10" />
+);
+
 const WaveParticles = () => {
   const meshRef = useRef<THREE.Points>(null);
-  const { pointer, viewport } = useThree();
+  const { pointer } = useThree();
   
   // Create particle grid
   const { positions, colors } = useMemo(() => {
@@ -99,7 +139,16 @@ interface ParticleWaveProps {
 }
 
 export const ParticleWave = ({ scrollProgress = 0 }: ParticleWaveProps) => {
+  const [webGLSupported, setWebGLSupported] = useState(true);
   const opacity = Math.max(0, 1 - scrollProgress * 1.2);
+
+  useEffect(() => {
+    setWebGLSupported(isWebGLAvailable());
+  }, []);
+
+  if (!webGLSupported) {
+    return <FallbackBackground />;
+  }
 
   return (
     <div
@@ -109,14 +158,21 @@ export const ParticleWave = ({ scrollProgress = 0 }: ParticleWaveProps) => {
         transition: "opacity 0.3s ease-out",
       }}
     >
-      <Canvas
-        camera={{ position: [0, 8, 12], fov: 60 }}
-        style={{ background: "transparent" }}
-        dpr={[1, 2]}
-      >
-        <ambientLight intensity={0.3} />
-        <WaveParticles />
-      </Canvas>
+      <CanvasErrorBoundary fallback={<FallbackBackground />}>
+        <Canvas
+          camera={{ position: [0, 8, 12], fov: 60 }}
+          style={{ background: "transparent" }}
+          dpr={[1, 1.5]}
+          gl={{ 
+            antialias: false,
+            powerPreference: "low-power",
+            failIfMajorPerformanceCaveat: true
+          }}
+        >
+          <ambientLight intensity={0.3} />
+          <WaveParticles />
+        </Canvas>
+      </CanvasErrorBoundary>
     </div>
   );
 };
