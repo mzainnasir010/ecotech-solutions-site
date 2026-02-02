@@ -1,185 +1,294 @@
-import { useLayoutEffect, useRef, useState } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
-import { ArrowUpRight } from "lucide-react";
+import { useState, useRef } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { ArrowUpRight, ChevronLeft, ChevronRight } from "lucide-react";
 
 const projects = [
   {
     id: 1,
     title: "Solar Grid Revolution",
     category: "Clean Energy",
-    description: "A nationwide solar infrastructure project delivering clean energy to over 2 million homes.",
-    stats: "2.4M+ Homes Powered",
+    description: "A nationwide solar infrastructure project delivering clean energy to over 2 million homes across 15 states.",
+    stats: "2.4M+",
+    statsLabel: "Homes Powered",
     image: "https://images.unsplash.com/photo-1509391366360-2e959784a276?q=80&w=2072&auto=format&fit=crop",
+    year: "2024",
   },
   {
     id: 2,
     title: "Ocean Plastic Initiative",
     category: "Circular Economy",
-    description: "Revolutionary ocean cleanup technology converting marine waste into sustainable materials.",
-    stats: "850K Tons Recovered",
+    description: "Revolutionary ocean cleanup technology converting marine waste into sustainable materials for construction.",
+    stats: "850K",
+    statsLabel: "Tons Recovered",
     image: "https://images.unsplash.com/photo-1484291470158-b8f8d608850d?q=80&w=2070&auto=format&fit=crop",
+    year: "2023",
   },
   {
     id: 3,
     title: "Urban Forest Network",
     category: "Carbon Solutions",
-    description: "Creating interconnected urban forests across major cities to combat climate change.",
-    stats: "12M Trees Planted",
+    description: "Creating interconnected urban forests across major cities to combat climate change and improve air quality.",
+    stats: "12M",
+    statsLabel: "Trees Planted",
     image: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?q=80&w=2071&auto=format&fit=crop",
+    year: "2024",
   },
   {
     id: 4,
     title: "Smart Water Systems",
     category: "Water Tech",
-    description: "AI-powered water management reducing consumption by 40% across industrial facilities.",
-    stats: "40% Water Saved",
+    description: "AI-powered water management reducing consumption by 40% across industrial facilities worldwide.",
+    stats: "40%",
+    statsLabel: "Water Saved",
     image: "https://images.unsplash.com/photo-1468421870903-4df1664ac249?q=80&w=2089&auto=format&fit=crop",
+    year: "2023",
   },
 ];
 
 export const PortfolioSection = () => {
-  const sectionRef = useRef<HTMLElement>(null);
-  const trackRef = useRef<HTMLDivElement>(null);
-  const [maxTranslateX, setMaxTranslateX] = useState(0);
-  const [sectionHeight, setSectionHeight] = useState("500vh");
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [direction, setDirection] = useState(0);
 
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start start", "end end"],
-  });
+  const goToPrevious = () => {
+    setDirection(-1);
+    setCurrentIndex((prev) => (prev === 0 ? projects.length - 1 : prev - 1));
+  };
 
-  // Measure how far the track must travel so the last card is fully visible
-  useLayoutEffect(() => {
-    const update = () => {
-      if (!trackRef.current) return;
-      const trackWidth = trackRef.current.scrollWidth;
-      const viewportWidth = window.innerWidth;
-      const maxX = Math.max(0, trackWidth - viewportWidth + 100); // Extra padding
+  const goToNext = () => {
+    setDirection(1);
+    setCurrentIndex((prev) => (prev === projects.length - 1 ? 0 : prev + 1));
+  };
 
-      setMaxTranslateX(maxX);
-      // Set section height to allow enough scroll distance
-      const minHeight = (projects.length + 1) * window.innerHeight;
-      setSectionHeight(`${Math.max(maxX + window.innerHeight * 1.5, minHeight)}px`);
-    };
+  const goToSlide = (index: number) => {
+    setDirection(index > currentIndex ? 1 : -1);
+    setCurrentIndex(index);
+  };
 
-    update();
-    window.addEventListener("resize", update);
-    return () => window.removeEventListener("resize", update);
-  }, []);
+  const currentProject = projects[currentIndex];
 
-  // Map vertical scroll to horizontal position
-  const x = useTransform(scrollYProgress, (v) => -v * maxTranslateX);
+  const slideVariants = {
+    enter: (direction: number) => ({
+      x: direction > 0 ? "100%" : "-100%",
+      opacity: 0,
+    }),
+    center: {
+      x: 0,
+      opacity: 1,
+    },
+    exit: (direction: number) => ({
+      x: direction < 0 ? "100%" : "-100%",
+      opacity: 0,
+    }),
+  };
 
-  // Progress bar
-  const progressWidth = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
+  const contentVariants = {
+    enter: (direction: number) => ({
+      x: direction > 0 ? 60 : -60,
+      opacity: 0,
+    }),
+    center: {
+      x: 0,
+      opacity: 1,
+    },
+    exit: (direction: number) => ({
+      x: direction < 0 ? 60 : -60,
+      opacity: 0,
+    }),
+  };
 
   return (
-    <section
-      id="work"
-      ref={sectionRef}
-      className="relative bg-background"
-      style={{ height: sectionHeight }}
-    >
-      {/* Sticky Container */}
-      <div className="sticky top-0 h-screen overflow-hidden">
-        {/* Background gradient */}
-        <div className="absolute inset-0 bg-gradient-to-br from-background via-background to-primary/5" />
+    <section id="work" className="relative min-h-screen bg-secondary overflow-hidden py-20 md:py-28">
+      {/* Background Image with Overlay */}
+      <div className="absolute inset-0">
+        <AnimatePresence initial={false} custom={direction}>
+          <motion.div
+            key={currentIndex}
+            custom={direction}
+            variants={slideVariants}
+            initial="enter"
+            animate="center"
+            exit="exit"
+            transition={{ duration: 0.7, ease: [0.32, 0.72, 0, 1] }}
+            className="absolute inset-0"
+          >
+            <img
+              src={currentProject.image}
+              alt={currentProject.title}
+              className="w-full h-full object-cover"
+            />
+          </motion.div>
+        </AnimatePresence>
+        
+        {/* Overlays */}
+        <div className="absolute inset-0 bg-secondary/85" />
+        <div className="absolute inset-0 bg-gradient-to-r from-secondary via-secondary/80 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-secondary via-transparent to-secondary/60" />
+      </div>
 
-        {/* Header - fixed at top */}
-        <div className="absolute top-0 left-0 right-0 z-20 pt-32 pb-8 px-6 lg:px-12 bg-gradient-to-b from-background via-background to-transparent">
-          <div className="container mx-auto">
-            <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-8">
-              <div>
-                <div className="flex items-center gap-3 mb-6">
-                  <div className="w-12 h-[1px] bg-primary" />
-                  <span className="text-sm font-medium text-primary uppercase tracking-[0.2em]">
-                    Featured Work
+      {/* Header */}
+      <div className="relative z-10 container mx-auto px-6 lg:px-12 mb-16">
+        <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-8">
+          <div>
+            <div className="flex items-center gap-3 mb-6">
+              <div className="w-12 h-[1px] bg-primary" />
+              <span className="text-sm font-medium text-primary uppercase tracking-[0.2em]">
+                Featured Work
+              </span>
+            </div>
+            <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl text-off-white leading-[1.1]">
+              Projects That{" "}
+              <span className="text-primary">Define</span>{" "}
+              Impact
+            </h2>
+          </div>
+
+          {/* Slide Counter */}
+          <div className="flex items-center gap-4">
+            <span className="font-serif text-5xl text-primary">
+              0{currentIndex + 1}
+            </span>
+            <span className="text-off-white/40">/</span>
+            <span className="text-off-white/40">0{projects.length}</span>
+          </div>
+        </div>
+      </div>
+
+      {/* Main Content */}
+      <div className="relative z-10 container mx-auto px-6 lg:px-12">
+        <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+          {/* Left - Project Info */}
+          <div className="relative min-h-[400px]">
+            <AnimatePresence initial={false} custom={direction} mode="wait">
+              <motion.div
+                key={currentIndex}
+                custom={direction}
+                variants={contentVariants}
+                initial="enter"
+                animate="center"
+                exit="exit"
+                transition={{ duration: 0.5, ease: [0.32, 0.72, 0, 1] }}
+                className="space-y-6"
+              >
+                {/* Category & Year */}
+                <div className="flex items-center gap-4">
+                  <span className="px-4 py-1.5 rounded-full bg-primary/20 text-primary text-sm font-medium backdrop-blur-sm border border-primary/30">
+                    {currentProject.category}
                   </span>
+                  <span className="text-off-white/40 text-sm">{currentProject.year}</span>
                 </div>
-                <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl xl:text-7xl text-foreground leading-[1.1]">
-                  Projects That{" "}
-                  <span className="text-primary">Define</span>{" "}
-                  Impact
-                </h2>
-              </div>
 
-              {/* Progress indicator */}
-              <div className="flex items-center gap-4">
-                <span className="text-sm text-muted-foreground">Scroll to explore</span>
-                <div className="w-32 h-1 bg-border rounded-full overflow-hidden">
-                  <motion.div
-                    className="h-full bg-primary rounded-full"
-                    style={{ width: progressWidth }}
-                  />
+                {/* Title */}
+                <h3 className="font-serif text-4xl md:text-5xl lg:text-6xl text-off-white leading-[1.1]">
+                  {currentProject.title}
+                </h3>
+
+                {/* Description */}
+                <p className="text-off-white/60 text-lg md:text-xl max-w-lg leading-relaxed">
+                  {currentProject.description}
+                </p>
+
+                {/* Stats */}
+                <div className="pt-4">
+                  <div className="inline-flex items-center gap-4 px-6 py-4 rounded-2xl bg-off-white/5 border border-off-white/10 backdrop-blur-sm">
+                    <span className="font-serif text-4xl md:text-5xl text-primary">
+                      {currentProject.stats}
+                    </span>
+                    <span className="text-off-white/60 text-sm uppercase tracking-wider">
+                      {currentProject.statsLabel}
+                    </span>
+                  </div>
                 </div>
-              </div>
+
+                {/* CTA */}
+                <div className="pt-4">
+                  <button className="group inline-flex items-center gap-3 text-off-white hover:text-primary transition-colors duration-300">
+                    <span className="text-lg font-medium">View Case Study</span>
+                    <div className="w-10 h-10 rounded-full border border-current flex items-center justify-center group-hover:bg-primary group-hover:border-primary group-hover:text-secondary transition-all duration-300">
+                      <ArrowUpRight className="h-4 w-4" />
+                    </div>
+                  </button>
+                </div>
+              </motion.div>
+            </AnimatePresence>
+          </div>
+
+          {/* Right - Image Preview */}
+          <div className="relative">
+            <div className="relative aspect-[4/5] rounded-3xl overflow-hidden">
+              <AnimatePresence initial={false} custom={direction}>
+                <motion.div
+                  key={currentIndex}
+                  custom={direction}
+                  variants={slideVariants}
+                  initial="enter"
+                  animate="center"
+                  exit="exit"
+                  transition={{ duration: 0.7, ease: [0.32, 0.72, 0, 1] }}
+                  className="absolute inset-0"
+                >
+                  <img
+                    src={currentProject.image}
+                    alt={currentProject.title}
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-secondary/60 via-transparent to-transparent" />
+                </motion.div>
+              </AnimatePresence>
+
+              {/* Frame decoration */}
+              <div className="absolute inset-0 border border-off-white/10 rounded-3xl pointer-events-none" />
+            </div>
+
+            {/* Floating project number */}
+            <div className="absolute -bottom-6 -right-6 font-serif text-[10rem] text-primary/10 leading-none pointer-events-none select-none hidden lg:block">
+              0{currentIndex + 1}
             </div>
           </div>
         </div>
-
-        {/* Horizontal Scroll Gallery */}
-        <div className="absolute inset-0 flex items-center pt-24">
-          <motion.div
-            ref={trackRef}
-            style={{ x }}
-            className="flex gap-8 pl-6 lg:pl-12"
-          >
-            {projects.map((project, index) => (
-              <motion.div
-                key={project.id}
-                className="group relative flex-shrink-0 w-[85vw] md:w-[70vw] lg:w-[50vw] h-[60vh] rounded-2xl overflow-hidden cursor-pointer"
-              >
-                {/* Image */}
-                <img
-                  src={project.image}
-                  alt={project.title}
-                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                />
-
-                {/* Gradient Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-secondary via-secondary/50 to-transparent opacity-80 group-hover:opacity-90 transition-opacity duration-500" />
-
-                {/* Project Number */}
-                <div className="absolute top-6 right-6 font-serif text-8xl text-off-white/10">
-                  0{index + 1}
-                </div>
-
-                {/* Content */}
-                <div className="absolute inset-0 p-8 md:p-12 flex flex-col justify-end">
-                  <div className="mb-4">
-                    <span className="inline-block px-4 py-1.5 rounded-full bg-primary/20 text-primary text-sm font-medium backdrop-blur-sm">
-                      {project.category}
-                    </span>
-                  </div>
-
-                  <h3 className="font-serif text-3xl md:text-4xl lg:text-5xl text-off-white mb-4 group-hover:text-primary transition-colors duration-300">
-                    {project.title}
-                  </h3>
-
-                  <p className="text-off-white/70 text-lg max-w-xl mb-6 line-clamp-2">
-                    {project.description}
-                  </p>
-
-                  <div className="flex items-center justify-between">
-                    <span className="text-primary font-medium text-lg">
-                      {project.stats}
-                    </span>
-                    <div className="w-12 h-12 rounded-full bg-primary flex items-center justify-center opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-500">
-                      <ArrowUpRight className="h-5 w-5 text-secondary" />
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-
-            {/* End spacer to ensure last card is fully visible */}
-            <div className="flex-shrink-0 w-[50vw]" />
-          </motion.div>
-        </div>
-
-        {/* Bottom gradient fade */}
-        <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-secondary to-transparent z-10" />
       </div>
+
+      {/* Navigation Buttons */}
+      <div className="relative z-20 container mx-auto px-6 lg:px-12 mt-12">
+        <div className="flex items-center justify-between">
+          {/* Dot indicators */}
+          <div className="flex items-center gap-3">
+            {projects.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => goToSlide(index)}
+                className={`h-2 rounded-full transition-all duration-300 ${
+                  index === currentIndex
+                    ? "w-8 bg-primary"
+                    : "w-2 bg-off-white/30 hover:bg-off-white/50"
+                }`}
+                aria-label={`Go to slide ${index + 1}`}
+              />
+            ))}
+          </div>
+
+          {/* Arrow buttons */}
+          <div className="flex items-center gap-4">
+            <button
+              onClick={goToPrevious}
+              className="group w-14 h-14 rounded-full border border-off-white/20 flex items-center justify-center hover:border-primary hover:bg-primary transition-all duration-300"
+              aria-label="Previous project"
+            >
+              <ChevronLeft className="h-6 w-6 text-off-white group-hover:text-secondary transition-colors" />
+            </button>
+            <button
+              onClick={goToNext}
+              className="group w-14 h-14 rounded-full border border-off-white/20 flex items-center justify-center hover:border-primary hover:bg-primary transition-all duration-300"
+              aria-label="Next project"
+            >
+              <ChevronRight className="h-6 w-6 text-off-white group-hover:text-secondary transition-colors" />
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* Decorative corner element */}
+      <div className="absolute top-12 right-12 w-24 h-24 border border-primary/20 rounded-full hidden lg:block" />
+      <div className="absolute bottom-12 left-12 w-16 h-16 border border-off-white/10 rounded-full hidden lg:block" />
     </section>
   );
 };
