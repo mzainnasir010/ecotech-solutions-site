@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useLayoutEffect, useRef, useState } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 
@@ -39,6 +39,11 @@ const projects = [
 
 export const PortfolioSection = () => {
   const sectionRef = useRef<HTMLElement>(null);
+  const trackRef = useRef<HTMLDivElement>(null);
+  const [maxTranslateX, setMaxTranslateX] = useState(0);
+  const [sectionHeightPx, setSectionHeightPx] = useState<string>(
+    `${(projects.length + 1) * 100}vh`
+  );
   
   // Create sticky horizontal scroll effect
   const { scrollYProgress } = useScroll({
@@ -46,23 +51,40 @@ export const PortfolioSection = () => {
     offset: ["start start", "end end"],
   });
 
-  // Map vertical scroll to horizontal position - scroll through all cards
-  // Each card is ~50vw, so for 4 cards we need to scroll ~150vw (3 cards worth to see the 4th)
-  const x = useTransform(scrollYProgress, [0, 1], ["0%", "-75%"]);
+  // Measure how far the track must travel so the last card can fully enter view.
+  useLayoutEffect(() => {
+    const update = () => {
+      if (!trackRef.current) return;
+      const trackWidth = trackRef.current.scrollWidth;
+      const viewportWidth = window.innerWidth;
+      const maxX = Math.max(0, trackWidth - viewportWidth);
+
+      setMaxTranslateX(maxX);
+      // Make vertical scroll distance match horizontal travel distance.
+      // Also enforce a minimum height so we never exit the section before
+      // the last card can settle fully into view.
+      const minHeight = (projects.length + 2) * window.innerHeight;
+      setSectionHeightPx(`${Math.ceil(Math.max(maxX + window.innerHeight, minHeight))}px`);
+    };
+
+    update();
+    window.addEventListener("resize", update);
+    return () => window.removeEventListener("resize", update);
+  }, []);
+
+  // Map vertical scroll to horizontal position (in px)
+  // Use a function mapping so it always uses the latest measured maxTranslateX.
+  const x = useTransform(scrollYProgress, (v) => -v * maxTranslateX);
   
   // Progress bar
   const progressWidth = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
-
-  // Calculate proper section height: enough scroll distance to view all cards
-  // Each card needs about 100vh of scroll to fully transition
-  const sectionHeight = `${(projects.length + 0.5) * 100}vh`;
 
   return (
     <section
       id="work"
       ref={sectionRef}
       className="relative bg-background"
-      style={{ height: sectionHeight }}
+      style={{ height: sectionHeightPx }}
     >
       {/* Sticky Container */}
       <div className="sticky top-0 h-screen overflow-hidden">
@@ -104,8 +126,9 @@ export const PortfolioSection = () => {
         {/* Horizontal Scroll Gallery */}
         <div className="absolute inset-0 flex items-center pt-24">
           <motion.div
+            ref={trackRef}
             style={{ x }}
-            className="flex gap-8 pl-6 lg:pl-12"
+            className="flex gap-8 pl-6 lg:pl-12 pr-12 lg:pr-24"
           >
             {projects.map((project, index) => (
               <motion.div
@@ -154,9 +177,9 @@ export const PortfolioSection = () => {
                 </div>
               </motion.div>
             ))}
-            
-            {/* End spacer */}
-            <div className="flex-shrink-0 w-[10vw]" />
+
+            {/* End spacer ensures the last card can fully settle in view */}
+            <div className="flex-shrink-0 w-[40vw]" />
           </motion.div>
         </div>
 
