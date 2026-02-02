@@ -46,18 +46,23 @@ export const PortfolioSection = () => {
     offset: ["start start", "end end"],
   });
 
-  // Map vertical scroll to horizontal position (0% to -75% for 4 items)
+  // Map vertical scroll to horizontal position - scroll through all cards
+  // Each card is ~50vw, so for 4 cards we need to scroll ~150vw (3 cards worth to see the 4th)
   const x = useTransform(scrollYProgress, [0, 1], ["0%", "-75%"]);
   
   // Progress bar
   const progressWidth = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
+
+  // Calculate proper section height: enough scroll distance to view all cards
+  // Each card needs about 100vh of scroll to fully transition
+  const sectionHeight = `${(projects.length + 0.5) * 100}vh`;
 
   return (
     <section
       id="work"
       ref={sectionRef}
       className="relative bg-background"
-      style={{ height: `${projects.length * 55}vh` }}
+      style={{ height: sectionHeight }}
     >
       {/* Sticky Container */}
       <div className="sticky top-0 h-screen overflow-hidden">
