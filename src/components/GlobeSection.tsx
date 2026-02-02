@@ -203,7 +203,7 @@ export const GlobeSection = () => {
   return (
     <section
       ref={sectionRef}
-      className="relative min-h-screen py-16 md:py-20 bg-secondary overflow-hidden -mt-24"
+      className="relative min-h-screen py-10 md:py-14 bg-secondary overflow-hidden -mt-40"
       onMouseMove={handleMouseMove}
       onMouseDown={handleMouseDown}
       onMouseUp={handleMouseUp}
