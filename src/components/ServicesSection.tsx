@@ -1,7 +1,6 @@
 import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { Leaf, Zap, Recycle, Sun, TreeDeciduous, Droplets } from "lucide-react";
-import { StaggerContainer, StaggerItem } from "./SmoothScroll";
 
 const services = [
   {
@@ -109,41 +108,94 @@ export const ServicesSection = () => {
           </div>
         </div>
 
-        {/* Services Grid */}
-        <StaggerContainer 
-          staggerDelay={0.1}
-          className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8"
-        >
-          {services.map((service) => {
+        {/* Services - Scroll-based reveal */}
+        <div className="space-y-0">
+          {services.map((service, index) => {
             const Icon = service.icon;
+            const isEven = index % 2 === 0;
+            
             return (
-              <StaggerItem key={service.title}>
-                <motion.div
-                  whileHover={{ y: -8 }}
-                  transition={{ duration: 0.3 }}
-                  className="group relative p-8 lg:p-10 rounded-2xl bg-card border border-border/50 hover:border-primary/30 hover:shadow-2xl hover:shadow-primary/5 transition-all duration-500"
-                >
-                  {/* Icon */}
-                  <div className="mb-6 w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors duration-300">
-                    <Icon className="h-7 w-7 text-primary" />
-                  </div>
-
-                  {/* Content */}
-                  <h3 className="font-serif text-2xl text-foreground mb-3 group-hover:text-primary transition-colors duration-300">
-                    {service.title}
-                  </h3>
-                  <p className="text-muted-foreground leading-relaxed">
-                    {service.description}
-                  </p>
-
-                  {/* Hover line */}
-                  <div className="absolute bottom-0 left-8 right-8 h-[2px] bg-gradient-to-r from-transparent via-primary to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                </motion.div>
-              </StaggerItem>
+              <ServiceCard 
+                key={service.title}
+                service={service}
+                Icon={Icon}
+                index={index}
+                isEven={isEven}
+              />
             );
           })}
-        </StaggerContainer>
+        </div>
       </div>
     </section>
+  );
+};
+
+interface ServiceCardProps {
+  service: typeof services[0];
+  Icon: typeof Leaf;
+  index: number;
+  isEven: boolean;
+}
+
+const ServiceCard = ({ service, Icon, index, isEven }: ServiceCardProps) => {
+  const cardRef = useRef<HTMLDivElement>(null);
+  
+  const { scrollYProgress } = useScroll({
+    target: cardRef,
+    offset: ["start end", "center center"],
+  });
+
+  const x = useTransform(
+    scrollYProgress, 
+    [0, 1], 
+    [isEven ? -100 : 100, 0]
+  );
+  const opacity = useTransform(scrollYProgress, [0, 0.5, 1], [0, 0.5, 1]);
+  const scale = useTransform(scrollYProgress, [0, 1], [0.8, 1]);
+  const lineWidth = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
+
+  return (
+    <motion.div
+      ref={cardRef}
+      style={{ x, opacity, scale }}
+      className="group relative"
+    >
+      {/* Horizontal divider line with animation */}
+      <div className="absolute top-0 left-0 right-0 h-[1px] bg-border/30 overflow-hidden">
+        <motion.div 
+          className="h-full bg-primary"
+          style={{ width: lineWidth }}
+        />
+      </div>
+      
+      <div className={`py-12 md:py-16 lg:py-20 grid md:grid-cols-12 gap-6 md:gap-8 items-center ${isEven ? '' : 'md:text-right'}`}>
+        {/* Number */}
+        <div className={`md:col-span-2 ${isEven ? 'md:order-1' : 'md:order-3'}`}>
+          <span className="font-serif text-6xl md:text-7xl lg:text-8xl text-primary/20 group-hover:text-primary/40 transition-colors duration-500">
+            0{index + 1}
+          </span>
+        </div>
+
+        {/* Icon */}
+        <div className={`md:col-span-2 ${isEven ? 'md:order-2' : 'md:order-2'} flex ${isEven ? 'justify-start md:justify-center' : 'justify-start md:justify-center'}`}>
+          <motion.div 
+            className="w-20 h-20 rounded-2xl bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 group-hover:scale-110 transition-all duration-500"
+            whileHover={{ rotate: 5 }}
+          >
+            <Icon className="h-10 w-10 text-primary" />
+          </motion.div>
+        </div>
+
+        {/* Content */}
+        <div className={`md:col-span-8 ${isEven ? 'md:order-3' : 'md:order-1'}`}>
+          <h3 className="font-serif text-3xl md:text-4xl lg:text-5xl text-foreground mb-4 group-hover:text-primary transition-colors duration-500">
+            {service.title}
+          </h3>
+          <p className="text-muted-foreground text-lg leading-relaxed max-w-2xl">
+            {service.description}
+          </p>
+        </div>
+      </div>
+    </motion.div>
   );
 };
