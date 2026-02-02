@@ -21,7 +21,7 @@ export const TextRevealSection = () => {
   return (
     <section
       ref={sectionRef}
-      className="relative h-[200vh] bg-background"
+      className="relative h-[150vh] bg-background"
     >
       <div className="sticky top-0 h-screen flex items-center justify-center overflow-hidden">
         {/* Background text */}
