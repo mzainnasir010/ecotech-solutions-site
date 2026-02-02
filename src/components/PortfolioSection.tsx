@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowUpRight, ChevronLeft, ChevronRight } from "lucide-react";
 
@@ -49,6 +49,7 @@ export const PortfolioSection = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [direction, setDirection] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
   const goToNext = useCallback(() => {
     setDirection(1);
@@ -61,20 +62,37 @@ export const PortfolioSection = () => {
   }, []);
 
   const goToSlide = useCallback((index: number) => {
-    setDirection(index > currentIndex ? 1 : -1);
-    setCurrentIndex(index);
-  }, [currentIndex]);
+    setCurrentIndex((prev) => {
+      setDirection(index > prev ? 1 : -1);
+      return index;
+    });
+  }, []);
 
-  // Auto-play functionality
+  // Auto-play functionality with ref to avoid stale closures
   useEffect(() => {
-    if (isPaused) return;
-    
-    const interval = setInterval(() => {
-      goToNext();
-    }, 3000);
+    const startAutoPlay = () => {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+      }
+      intervalRef.current = setInterval(() => {
+        setDirection(1);
+        setCurrentIndex((prev) => (prev === projects.length - 1 ? 0 : prev + 1));
+      }, 3000);
+    };
 
-    return () => clearInterval(interval);
-  }, [isPaused, goToNext]);
+    if (!isPaused) {
+      startAutoPlay();
+    } else if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+      intervalRef.current = null;
+    }
+
+    return () => {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+      }
+    };
+  }, [isPaused]);
 
   const currentProject = projects[currentIndex];
 
