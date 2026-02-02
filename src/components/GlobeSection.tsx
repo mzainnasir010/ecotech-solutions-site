@@ -6,11 +6,14 @@ import * as THREE from "three";
 interface GlobeProps {
   scrollProgress: number;
   mousePosition: { x: number; y: number };
+  isDragging: boolean;
+  dragDelta: { x: number; y: number };
 }
 
-const Globe = ({ scrollProgress, mousePosition }: GlobeProps) => {
+const Globe = ({ scrollProgress, mousePosition, isDragging, dragDelta }: GlobeProps) => {
   const meshRef = useRef<THREE.Mesh>(null);
   const pointsRef = useRef<THREE.Points>(null);
+  const rotationRef = useRef({ x: 0, y: 0 });
   const { viewport } = useThree();
 
   // Create sphere points
@@ -67,16 +70,28 @@ const Globe = ({ scrollProgress, mousePosition }: GlobeProps) => {
 
   useFrame((state) => {
     if (meshRef.current && pointsRef.current) {
-      // Slow rotation
-      meshRef.current.rotation.y += 0.002;
-      pointsRef.current.rotation.y = meshRef.current.rotation.y;
+      // Update rotation based on drag
+      if (isDragging) {
+        rotationRef.current.x += dragDelta.y * 0.01;
+        rotationRef.current.y += dragDelta.x * 0.01;
+      } else {
+        // Slow auto rotation when not dragging
+        rotationRef.current.y += 0.002;
+      }
 
-      // Mouse interaction
+      // Apply rotation with smooth lerp
+      meshRef.current.rotation.y = THREE.MathUtils.lerp(
+        meshRef.current.rotation.y,
+        rotationRef.current.y,
+        0.1
+      );
       meshRef.current.rotation.x = THREE.MathUtils.lerp(
         meshRef.current.rotation.x,
-        mousePosition.y * 0.3,
-        0.05
+        rotationRef.current.x + mousePosition.y * 0.1,
+        0.1
       );
+      
+      pointsRef.current.rotation.y = meshRef.current.rotation.y;
       pointsRef.current.rotation.x = meshRef.current.rotation.x;
 
       // Subtle floating animation
@@ -139,6 +154,9 @@ const Globe = ({ scrollProgress, mousePosition }: GlobeProps) => {
 export const GlobeSection = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [isDragging, setIsDragging] = useState(false);
+  const [dragDelta, setDragDelta] = useState({ x: 0, y: 0 });
+  const lastMousePos = useRef({ x: 0, y: 0 });
   
   const { scrollYProgress } = useScroll({
     target: sectionRef,
@@ -154,6 +172,25 @@ export const GlobeSection = () => {
     const x = ((e.clientX - rect.left) / rect.width - 0.5) * 2;
     const y = ((e.clientY - rect.top) / rect.height - 0.5) * 2;
     setMousePosition({ x, y });
+    
+    if (isDragging) {
+      setDragDelta({
+        x: e.clientX - lastMousePos.current.x,
+        y: e.clientY - lastMousePos.current.y,
+      });
+      lastMousePos.current = { x: e.clientX, y: e.clientY };
+    }
+  };
+
+  const handleMouseDown = (e: React.MouseEvent) => {
+    setIsDragging(true);
+    lastMousePos.current = { x: e.clientX, y: e.clientY };
+    setDragDelta({ x: 0, y: 0 });
+  };
+
+  const handleMouseUp = () => {
+    setIsDragging(false);
+    setDragDelta({ x: 0, y: 0 });
   };
 
   const locations = [
@@ -166,8 +203,12 @@ export const GlobeSection = () => {
   return (
     <section
       ref={sectionRef}
-      className="relative min-h-screen py-32 md:py-40 bg-secondary overflow-hidden"
+      className="relative min-h-screen py-20 md:py-28 bg-secondary overflow-hidden"
       onMouseMove={handleMouseMove}
+      onMouseDown={handleMouseDown}
+      onMouseUp={handleMouseUp}
+      onMouseLeave={handleMouseUp}
+      style={{ cursor: isDragging ? 'grabbing' : 'grab' }}
     >
       {/* Background gradient */}
       <div className="absolute inset-0 bg-gradient-to-b from-secondary via-secondary to-secondary" />
@@ -182,6 +223,8 @@ export const GlobeSection = () => {
           <Globe 
             scrollProgress={0} 
             mousePosition={mousePosition}
+            isDragging={isDragging}
+            dragDelta={dragDelta}
           />
         </Canvas>
       </div>

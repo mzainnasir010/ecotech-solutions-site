@@ -20,7 +20,7 @@ export const MissionSection = () => {
   return (
     <section
       ref={sectionRef}
-      className="relative py-40 md:py-56 lg:py-72 bg-secondary overflow-hidden"
+      className="relative py-24 md:py-32 lg:py-40 bg-secondary overflow-hidden"
     >
       {/* Background elements */}
       <div className="absolute inset-0">
