@@ -1,133 +1,130 @@
 import { useRef } from "react";
-import { motion, useInView, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { Reveal } from "./SmoothScroll";
 
-const steps = [
+const processSteps = [
   {
     number: "01",
-    title: "Discovery & Research",
+    title: "Discovery",
+    subtitle: "Understanding Your Vision",
     description:
-      "We begin by understanding your vision, goals, and sustainability objectives. Through in-depth research and analysis, we identify opportunities to create meaningful environmental impact while meeting your business needs.",
-    image: "https://images.unsplash.com/photo-1497436072909-60f360e1d4b1?w=800&q=80",
+      "We begin by deeply understanding your sustainability goals, operational challenges, and the unique opportunities within your industry. Our comprehensive analysis forms the foundation for transformative solutions.",
   },
   {
     number: "02",
-    title: "Sustainable Strategy",
+    title: "Strategy",
+    subtitle: "Crafting the Blueprint",
     description:
-      "Our team crafts a comprehensive strategy that balances innovation with environmental responsibility. We map out the most efficient paths to achieve your goals while minimizing ecological footprint.",
-    image: "https://images.unsplash.com/photo-1518495973542-4542c06a5843?w=800&q=80",
+      "Our experts design a tailored roadmap that balances environmental impact with business objectives. Every strategy is backed by data, research, and proven methodologies.",
   },
   {
     number: "03",
-    title: "Green Development",
+    title: "Implementation",
+    subtitle: "Bringing Ideas to Life",
     description:
-      "Using eco-conscious development practices, we build your solution with clean code, optimized performance, and energy-efficient architecture. Every line of code is written with sustainability in mind.",
-    image: "https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=800&q=80",
+      "With precision engineering and sustainable practices, we transform concepts into reality. Our teams work seamlessly to deliver solutions that exceed expectations.",
   },
   {
     number: "04",
-    title: "Launch & Growth",
+    title: "Optimization",
+    subtitle: "Continuous Evolution",
     description:
-      "We deploy your solution on carbon-neutral infrastructure and provide ongoing optimization to ensure continued environmental performance. Your digital presence grows sustainably.",
-    image: "https://images.unsplash.com/photo-1501854140801-50d01698950b?w=800&q=80",
+      "Sustainability is an ongoing journey. We continuously monitor, measure, and optimize your solutions to ensure maximum impact and evolving excellence.",
   },
 ];
 
-const ProcessStep = ({
-  step,
-  index,
-}: {
-  step: (typeof steps)[0];
-  index: number;
-}) => {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, amount: 0.3 });
-  const isReversed = index % 2 === 1;
-
-  const imageRef = useRef(null);
+export const ProcessSection = () => {
+  const sectionRef = useRef<HTMLElement>(null);
+  
   const { scrollYProgress } = useScroll({
-    target: imageRef,
+    target: sectionRef,
     offset: ["start end", "end start"],
   });
-  const imageY = useTransform(scrollYProgress, [0, 1], [50, -50]);
+
+  const lineHeight = useTransform(scrollYProgress, [0.1, 0.9], ["0%", "100%"]);
 
   return (
-    <motion.div
-      ref={ref}
-      initial={{ opacity: 0, y: 60 }}
-      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 60 }}
-      transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-      className={`flex flex-col ${
-        isReversed ? "lg:flex-row-reverse" : "lg:flex-row"
-      } gap-12 lg:gap-20 items-center mb-24 last:mb-0`}
+    <section
+      id="process"
+      ref={sectionRef}
+      className="relative py-32 md:py-40 lg:py-48 bg-secondary overflow-hidden"
     >
-      {/* Image */}
-      <div ref={imageRef} className="w-full lg:w-1/2 relative overflow-hidden rounded-3xl">
-        <motion.img
-          style={{ y: imageY }}
-          src={step.image}
-          alt={step.title}
-          className="w-full h-[300px] lg:h-[450px] object-cover scale-110"
-        />
+      {/* Background elements */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute top-1/4 -right-32 w-[500px] h-[500px] rounded-full bg-primary/5 blur-[100px]" />
+        <div className="absolute bottom-1/4 -left-32 w-[400px] h-[400px] rounded-full bg-sage-dark/10 blur-[80px]" />
       </div>
 
-      {/* Content */}
-      <div className="w-full lg:w-1/2 relative">
-        {/* Large decorative number */}
-        <span className="absolute -top-8 left-0 font-serif text-[120px] lg:text-[160px] font-light text-primary/10 leading-none select-none">
-          {step.number}
-        </span>
-
-        <div className="relative z-10 pt-12 lg:pt-20">
-          <motion.h3
+      <div className="container relative z-10 mx-auto px-6 lg:px-12">
+        {/* Section Header */}
+        <div className="mb-20 md:mb-32 max-w-3xl">
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-            transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-            className="font-serif text-3xl lg:text-4xl text-off-white mb-6"
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="flex items-center gap-3 mb-6"
           >
-            {step.title}
-          </motion.h3>
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-            transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-            className="text-off-white/70 text-lg leading-relaxed max-w-lg"
+            <div className="w-12 h-[1px] bg-primary" />
+            <span className="text-sm font-medium text-primary uppercase tracking-[0.2em]">
+              Our Process
+            </span>
+          </motion.div>
+          
+          <motion.h2
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.1 }}
+            className="font-serif text-4xl md:text-5xl lg:text-6xl xl:text-7xl text-off-white leading-[1.1]"
           >
-            {step.description}
-          </motion.p>
+            A Proven Path to{" "}
+            <span className="text-primary">Sustainable</span>{" "}
+            Excellence
+          </motion.h2>
         </div>
-      </div>
-    </motion.div>
-  );
-};
 
-export const ProcessSection = () => {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, amount: 0.1 });
+        {/* Process Steps */}
+        <div className="relative">
+          {/* Vertical line - animated */}
+          <div className="absolute left-8 lg:left-16 top-0 bottom-0 w-[1px] bg-off-white/10">
+            <motion.div 
+              className="w-full bg-primary origin-top"
+              style={{ height: lineHeight }}
+            />
+          </div>
 
-  return (
-    <section id="process" className="section-padding bg-secondary">
-      <div className="container mx-auto">
-        {/* Header */}
-        <motion.div
-          ref={ref}
-          initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="text-center mb-24"
-        >
-          <span className="text-xs font-medium uppercase tracking-[0.15em] text-primary mb-4 block">
-            Our Approach
-          </span>
-          <h2 className="font-serif text-4xl md:text-5xl text-off-white max-w-2xl mx-auto">
-            A Process Rooted in Purpose
-          </h2>
-        </motion.div>
+          {/* Steps */}
+          <div className="space-y-24 lg:space-y-32">
+            {processSteps.map((step, index) => (
+              <Reveal key={step.number} delay={index * 0.1}>
+                <div className="relative pl-24 lg:pl-40">
+                  {/* Number badge */}
+                  <div className="absolute left-0 lg:left-8 top-0 w-16 h-16 rounded-full bg-secondary border border-primary flex items-center justify-center">
+                    <span className="font-serif text-2xl text-primary">{step.number}</span>
+                  </div>
 
-        {/* Steps */}
-        <div className="max-w-6xl mx-auto">
-          {steps.map((step, index) => (
-            <ProcessStep key={step.number} step={step} index={index} />
-          ))}
+                  {/* Large background number */}
+                  <div className="absolute -left-8 lg:left-24 -top-8 font-serif text-[180px] lg:text-[240px] text-off-white/[0.02] leading-none select-none pointer-events-none">
+                    {step.number}
+                  </div>
+
+                  {/* Content */}
+                  <div className="relative">
+                    <span className="text-sm text-primary uppercase tracking-[0.2em] mb-2 block">
+                      {step.subtitle}
+                    </span>
+                    <h3 className="font-serif text-3xl md:text-4xl lg:text-5xl text-off-white mb-6">
+                      {step.title}
+                    </h3>
+                    <p className="text-off-white/60 text-lg leading-relaxed max-w-2xl">
+                      {step.description}
+                    </p>
+                  </div>
+                </div>
+              </Reveal>
+            ))}
+          </div>
         </div>
       </div>
     </section>

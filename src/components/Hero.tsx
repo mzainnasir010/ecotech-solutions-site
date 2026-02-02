@@ -1,8 +1,8 @@
 import { useEffect, useState, useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { ArrowRight, ChevronDown } from "lucide-react";
+import { ArrowDown, Play } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { FloatingLeaf } from "./FloatingLeaf";
+import { ParticleWave } from "./ParticleWave";
 
 export const Hero = () => {
   const [scrollProgress, setScrollProgress] = useState(0);
@@ -13,8 +13,9 @@ export const Hero = () => {
     offset: ["start start", "end start"],
   });
 
-  const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
-  const y = useTransform(scrollYProgress, [0, 0.5], [0, 100]);
+  const textY = useTransform(scrollYProgress, [0, 1], [0, 300]);
+  const textOpacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
+  const scale = useTransform(scrollYProgress, [0, 0.5], [1, 0.9]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -33,93 +34,142 @@ export const Hero = () => {
     }
   };
 
-  const headlineWords = ["Growing", "Tomorrow's", "Solutions"];
+  // Split headline for animation
+  const lines = [
+    { text: "SUSTAINABLE", delay: 0 },
+    { text: "TECHNOLOGY", delay: 0.1 },
+    { text: "FOR TOMORROW", delay: 0.2 },
+  ];
 
   return (
     <section
       ref={sectionRef}
-      className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-secondary via-olive-light to-secondary"
+      className="relative min-h-[120vh] flex items-center justify-center overflow-hidden bg-secondary"
     >
-      {/* Background gradient overlay */}
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-secondary/50 to-secondary" />
+      {/* Gradient overlays */}
+      <div className="absolute inset-0 bg-gradient-to-b from-secondary via-secondary/95 to-secondary z-10" />
+      <div className="absolute inset-0 bg-gradient-to-r from-secondary via-transparent to-secondary/80 z-10" />
+      
+      {/* Top glow effect */}
+      <div 
+        className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] rounded-full blur-[120px] z-0"
+        style={{ background: "radial-gradient(ellipse, hsl(var(--primary) / 0.3) 0%, transparent 70%)" }}
+      />
 
-      {/* Content */}
-      <motion.div
-        style={{ opacity, y }}
-        className="container relative z-10 mx-auto px-6 lg:px-12 pt-24"
+      {/* 3D Particle Wave Background */}
+      <ParticleWave scrollProgress={scrollProgress} />
+
+      {/* Top bar with meta info */}
+      <motion.div 
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.5, duration: 0.8 }}
+        className="absolute top-24 left-0 right-0 z-20 px-6 lg:px-12"
       >
-        <div className="max-w-4xl">
-          {/* Animated Headline */}
-          <h1 className="font-serif text-5xl md:text-7xl lg:text-[88px] font-medium text-off-white leading-[1.05] tracking-tight mb-6">
-            {headlineWords.map((word, wordIndex) => (
-              <span key={wordIndex} className="inline-block mr-4 md:mr-6">
-                {word.split("").map((char, charIndex) => (
-                  <motion.span
-                    key={charIndex}
-                    initial={{ opacity: 0, y: 50 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{
-                      duration: 0.5,
-                      delay: wordIndex * 0.2 + charIndex * 0.03,
-                      ease: [0.16, 1, 0.3, 1],
-                    }}
-                    className="inline-block"
-                  >
-                    {char}
-                  </motion.span>
-                ))}
-              </span>
-            ))}
-          </h1>
-
-          {/* Subheadline */}
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 1, ease: [0.16, 1, 0.3, 1] }}
-            className="text-xl md:text-2xl text-off-white/80 font-light mb-10 max-w-2xl"
-          >
-            Where innovation meets nature. Pioneering sustainable technology
-            that harmonizes progress with our planet.
-          </motion.p>
-
-          {/* CTA Button */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 1.2, ease: [0.16, 1, 0.3, 1] }}
-          >
-            <Button
-              onClick={scrollToServices}
-              className="group rounded-full bg-primary px-8 py-6 text-base font-semibold text-secondary hover:bg-sage-light transition-all duration-300 hover:scale-105"
-              style={{
-                boxShadow: "0 8px 32px hsla(104, 30%, 71%, 0.3)",
-              }}
-            >
-              Explore Our Work
-              <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
-            </Button>
-          </motion.div>
+        <div className="container mx-auto flex justify-between items-center text-off-white/60 text-sm tracking-wide">
+          <span>Sustainable Innovation</span>
+          <span>Based Globally</span>
+          <span className="hidden md:block">Est. 2024</span>
         </div>
       </motion.div>
 
-      {/* 3D Floating Leaf */}
-      <FloatingLeaf scrollProgress={scrollProgress} />
+      {/* Main Content */}
+      <motion.div
+        style={{ y: textY, opacity: textOpacity, scale }}
+        className="container relative z-20 mx-auto px-6 lg:px-12 pt-32"
+      >
+        <div className="max-w-[95vw] mx-auto">
+          {/* Giant Typography */}
+          <h1 className="font-serif text-[12vw] md:text-[10vw] lg:text-[9vw] font-medium leading-[0.9] tracking-[-0.03em] text-off-white overflow-hidden">
+            {lines.map((line, lineIndex) => (
+              <div key={lineIndex} className="overflow-hidden">
+                <motion.div
+                  initial={{ y: "100%" }}
+                  animate={{ y: 0 }}
+                  transition={{
+                    duration: 1.2,
+                    delay: line.delay + 0.3,
+                    ease: [0.16, 1, 0.3, 1],
+                  }}
+                  className="flex"
+                >
+                  {line.text.split("").map((char, charIndex) => (
+                    <motion.span
+                      key={charIndex}
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{
+                        duration: 0.5,
+                        delay: line.delay + 0.8 + charIndex * 0.02,
+                      }}
+                      className="inline-block"
+                      style={{ 
+                        textShadow: "0 0 80px hsl(var(--primary) / 0.3)",
+                      }}
+                    >
+                      {char === " " ? "\u00A0" : char}
+                    </motion.span>
+                  ))}
+                </motion.div>
+              </div>
+            ))}
+          </h1>
+
+          {/* Subheadline and CTA row */}
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, delay: 1.2, ease: [0.16, 1, 0.3, 1] }}
+            className="mt-12 md:mt-16 flex flex-col md:flex-row md:items-end md:justify-between gap-8"
+          >
+            <p className="text-lg md:text-xl lg:text-2xl text-off-white/70 font-light max-w-xl leading-relaxed">
+              Pioneering the intersection of innovation and nature. 
+              We build technology that harmonizes progress with our planet's future.
+            </p>
+
+            <div className="flex items-center gap-4">
+              <Button
+                onClick={scrollToServices}
+                className="group rounded-full bg-primary px-8 py-6 text-base font-semibold text-secondary hover:bg-sage-light transition-all duration-500 hover:scale-105"
+                style={{
+                  boxShadow: "0 8px 40px hsl(var(--primary) / 0.4)",
+                }}
+              >
+                Explore Our Work
+                <ArrowDown className="ml-2 h-5 w-5 transition-transform group-hover:translate-y-1" />
+              </Button>
+              
+              <button className="group flex items-center justify-center w-14 h-14 rounded-full border border-off-white/30 text-off-white/80 hover:bg-off-white/10 hover:border-off-white/50 transition-all duration-300">
+                <Play className="h-5 w-5 transition-transform group-hover:scale-110" />
+              </button>
+            </div>
+          </motion.div>
+        </div>
+      </motion.div>
 
       {/* Scroll Indicator */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 1.5, duration: 0.8 }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 cursor-pointer"
+        transition={{ delay: 2, duration: 0.8 }}
+        className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-4 cursor-pointer z-20"
         onClick={scrollToServices}
-        style={{ opacity: 1 - scrollProgress * 2 }}
+        style={{ opacity: 1 - scrollProgress * 3 }}
       >
-        <span className="text-xs text-off-white/60 uppercase tracking-widest">
-          Scroll to explore
+        <span className="text-xs text-off-white/50 uppercase tracking-[0.3em]">
+          Scroll
         </span>
-        <ChevronDown className="h-5 w-5 text-off-white/60 animate-scroll-indicator" />
+        <motion.div
+          animate={{ y: [0, 8, 0] }}
+          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+          className="w-[1px] h-16 bg-gradient-to-b from-off-white/50 to-transparent"
+        />
       </motion.div>
+
+      {/* Decorative corner elements */}
+      <div className="absolute top-24 right-6 lg:right-12 z-20 text-off-white/30 text-xs tracking-widest hidden lg:block">
+        <div className="rotate-90 origin-right">NATURE × TECH</div>
+      </div>
     </section>
   );
 };
