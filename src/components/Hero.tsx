@@ -44,16 +44,23 @@ export const Hero = () => {
   return (
     <section
       ref={sectionRef}
-      className="relative min-h-[120vh] flex items-center justify-center overflow-hidden bg-secondary"
+      className="relative min-h-[120vh] flex items-center justify-center overflow-hidden"
+      style={{ background: "linear-gradient(135deg, hsl(105 28% 6%) 0%, hsl(105 28% 10%) 50%, hsl(105 20% 14%) 100%)" }}
     >
-      {/* Gradient overlays */}
-      <div className="absolute inset-0 bg-gradient-to-b from-secondary via-secondary/95 to-secondary z-10" />
-      <div className="absolute inset-0 bg-gradient-to-r from-secondary via-transparent to-secondary/80 z-10" />
+      {/* Gradient overlays - more dramatic */}
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/20 to-black/40 z-10" />
+      <div className="absolute inset-0 bg-gradient-to-r from-black/30 via-transparent to-black/30 z-10" />
       
-      {/* Top glow effect */}
+      {/* Top glow effect - more prominent */}
       <div 
-        className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] rounded-full blur-[120px] z-0"
-        style={{ background: "radial-gradient(ellipse, hsl(var(--primary) / 0.3) 0%, transparent 70%)" }}
+        className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[600px] rounded-full blur-[150px] z-0"
+        style={{ background: "radial-gradient(ellipse, hsl(var(--primary) / 0.4) 0%, hsl(var(--gold) / 0.1) 50%, transparent 80%)" }}
+      />
+      
+      {/* Bottom ambient glow */}
+      <div 
+        className="absolute bottom-0 left-1/4 w-[600px] h-[400px] rounded-full blur-[120px] z-0"
+        style={{ background: "radial-gradient(ellipse, hsl(var(--primary) / 0.2) 0%, transparent 70%)" }}
       />
 
       {/* 3D Particle Wave Background */}
