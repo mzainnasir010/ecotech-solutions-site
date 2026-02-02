@@ -9,14 +9,14 @@
 @layer base {
   :root {
     /* Primary Colors - HSL format */
-    --background: 80 15% 97%; /* Off-White #F8F9F6 */
-    --foreground: 105 23% 10%; /* Deep Olive #1A2517 */
+    --background: 60 10% 93%; /* Soft Cream - easier on eyes */
+    --foreground: 105 23% 15%; /* Deep Olive softened */
 
-    --card: 80 15% 97%;
-    --card-foreground: 105 23% 10%;
+    --card: 60 8% 95%;
+    --card-foreground: 105 23% 15%;
 
-    --popover: 80 15% 97%;
-    --popover-foreground: 105 23% 10%;
+    --popover: 60 8% 95%;
+    --popover-foreground: 105 23% 15%;
 
     /* Soft Sage as primary */
     --primary: 104 30% 71%; /* #ACC8A2 */
@@ -41,8 +41,8 @@
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 100 10% 85%;
-    --input: 100 10% 85%;
+    --border: 80 8% 82%;
+    --input: 80 8% 82%;
     --ring: 104 30% 71%;
 
     --radius: 0.5rem;
@@ -51,10 +51,10 @@
     --sage: 104 30% 71%;
     --sage-light: 104 30% 78%;
     --sage-dark: 104 30% 58%;
-    --olive: 105 23% 10%;
-    --olive-light: 105 18% 15%;
-    --warm-gray: 100 5% 55%;
-    --off-white: 80 15% 97%;
+    --olive: 105 23% 15%;
+    --olive-light: 105 18% 20%;
+    --warm-gray: 80 5% 55%;
+    --off-white: 60 10% 93%;
 
     --sidebar-background: 80 15% 97%;
     --sidebar-foreground: 105 23% 10%;
