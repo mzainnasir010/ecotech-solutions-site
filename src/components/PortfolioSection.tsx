@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowUpRight, ChevronLeft, ChevronRight } from "lucide-react";
 
@@ -48,21 +48,33 @@ const projects = [
 export const PortfolioSection = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [direction, setDirection] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
 
-  const goToPrevious = () => {
-    setDirection(-1);
-    setCurrentIndex((prev) => (prev === 0 ? projects.length - 1 : prev - 1));
-  };
-
-  const goToNext = () => {
+  const goToNext = useCallback(() => {
     setDirection(1);
     setCurrentIndex((prev) => (prev === projects.length - 1 ? 0 : prev + 1));
-  };
+  }, []);
 
-  const goToSlide = (index: number) => {
+  const goToPrevious = useCallback(() => {
+    setDirection(-1);
+    setCurrentIndex((prev) => (prev === 0 ? projects.length - 1 : prev - 1));
+  }, []);
+
+  const goToSlide = useCallback((index: number) => {
     setDirection(index > currentIndex ? 1 : -1);
     setCurrentIndex(index);
-  };
+  }, [currentIndex]);
+
+  // Auto-play functionality
+  useEffect(() => {
+    if (isPaused) return;
+    
+    const interval = setInterval(() => {
+      goToNext();
+    }, 3000);
+
+    return () => clearInterval(interval);
+  }, [isPaused, goToNext]);
 
   const currentProject = projects[currentIndex];
 
@@ -97,7 +109,12 @@ export const PortfolioSection = () => {
   };
 
   return (
-    <section id="work" className="relative min-h-screen bg-secondary overflow-hidden py-20 md:py-28">
+    <section 
+      id="work" 
+      className="relative min-h-screen bg-secondary overflow-hidden py-20 md:py-28"
+      onMouseEnter={() => setIsPaused(true)}
+      onMouseLeave={() => setIsPaused(false)}
+    >
       {/* Background Image with Overlay */}
       <div className="absolute inset-0">
         <AnimatePresence initial={false} custom={direction}>
