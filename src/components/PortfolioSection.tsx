@@ -57,7 +57,7 @@ export const PortfolioSection = () => {
       id="work"
       ref={sectionRef}
       className="relative bg-background"
-      style={{ height: `${projects.length * 100}vh` }}
+      style={{ height: `${projects.length * 75}vh` }}
     >
       {/* Sticky Container */}
       <div className="sticky top-0 h-screen overflow-hidden">
