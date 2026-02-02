@@ -39,11 +39,11 @@ export const Navigation = () => {
         transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-400 ${
           isScrolled
-            ? "bg-background/95 shadow-lg backdrop-blur-md py-4"
+            ? "bg-background/95 shadow-lg backdrop-blur-md py-4 mx-4 mt-2 rounded-full"
             : "bg-transparent py-6"
         }`}
       >
-        <div className="container mx-auto flex items-center justify-between px-6 lg:px-12">
+        <div className="flex items-center justify-between px-8 lg:px-16 max-w-[1800px] mx-auto w-full">
           {/* Logo */}
           <a
             href="#"
