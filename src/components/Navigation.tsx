@@ -41,7 +41,7 @@ export const Navigation = () => {
           isScrolled ? "bg-background/95 shadow-lg backdrop-blur-md py-4" : "bg-transparent py-6"
         }`}
       >
-        <div className="w-full flex items-center justify-between px-4 md:px-16 lg:px-18">
+        <div className="w-full flex items-center justify-between px-4 md:px-16 lg:px-22">
           {/* Logo */}
           <a
             href="#"
