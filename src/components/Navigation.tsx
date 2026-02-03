@@ -38,12 +38,10 @@ export const Navigation = () => {
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-400 ${
-          isScrolled
-            ? "bg-background/95 shadow-lg backdrop-blur-md py-4"
-            : "bg-transparent py-6"
+          isScrolled ? "bg-background/95 shadow-lg backdrop-blur-md py-4" : "bg-transparent py-6"
         }`}
       >
-        <div className="w-full flex items-center justify-between px-4 md:px-6 lg:px-8">
+        <div className="w-full flex items-center justify-between px-4 md:px-16 lg:px-8">
           {/* Logo */}
           <a
             href="#"
@@ -53,17 +51,10 @@ export const Navigation = () => {
               window.scrollTo({ top: 0, behavior: "smooth" });
             }}
           >
-            <motion.div
-              whileHover={{ rotate: 360 }}
-              transition={{ duration: 1, ease: "easeInOut" }}
-            >
+            <motion.div whileHover={{ rotate: 360 }} transition={{ duration: 1, ease: "easeInOut" }}>
               <Leaf className="h-8 w-8 text-primary" />
             </motion.div>
-            <span
-              className={`font-serif text-xl font-medium ${
-                isScrolled ? "text-foreground" : "text-off-white"
-              }`}
-            >
+            <span className={`font-serif text-xl font-medium ${isScrolled ? "text-foreground" : "text-off-white"}`}>
               EcoTech
             </span>
           </a>
@@ -75,9 +66,7 @@ export const Navigation = () => {
                 key={link.name}
                 onClick={() => scrollToSection(link.href)}
                 className={`link-underline text-sm font-medium tracking-wide transition-colors ${
-                  isScrolled
-                    ? "text-foreground hover:text-primary"
-                    : "text-off-white/90 hover:text-off-white"
+                  isScrolled ? "text-foreground hover:text-primary" : "text-off-white/90 hover:text-off-white"
                 }`}
               >
                 {link.name}
@@ -102,17 +91,9 @@ export const Navigation = () => {
             aria-label="Toggle menu"
           >
             {isMobileMenuOpen ? (
-              <X
-                className={`h-6 w-6 ${
-                  isScrolled ? "text-foreground" : "text-off-white"
-                }`}
-              />
+              <X className={`h-6 w-6 ${isScrolled ? "text-foreground" : "text-off-white"}`} />
             ) : (
-              <Menu
-                className={`h-6 w-6 ${
-                  isScrolled ? "text-foreground" : "text-off-white"
-                }`}
-              />
+              <Menu className={`h-6 w-6 ${isScrolled ? "text-foreground" : "text-off-white"}`} />
             )}
           </button>
         </div>
