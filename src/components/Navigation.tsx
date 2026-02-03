@@ -43,7 +43,7 @@ export const Navigation = () => {
             : "bg-transparent py-6"
         }`}
       >
-        <div className="container mx-auto flex items-center justify-between px-6 lg:px-12">
+        <div className="w-full flex items-center justify-between px-4 md:px-6 lg:px-8">
           {/* Logo */}
           <a
             href="#"
