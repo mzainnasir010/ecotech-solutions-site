@@ -1,5 +1,5 @@
 import { useRef, useMemo, useState, useEffect, Component, ReactNode } from "react";
-import { Canvas, useFrame, useThree } from "@react-three/fiber";
+import { Canvas, useFrame } from "@react-three/fiber";
 import { motion, useScroll, useTransform } from "framer-motion";
 import * as THREE from "three";
 
@@ -11,7 +11,7 @@ const isWebGLAvailable = (): boolean => {
       window.WebGLRenderingContext &&
       (canvas.getContext("webgl") || canvas.getContext("experimental-webgl"))
     );
-  } catch (e) {
+  } catch {
     return false;
   }
 };
@@ -39,9 +39,9 @@ class CanvasErrorBoundary extends Component<
 }
 
 // Fallback static globe illustration
-const FallbackGlobe = () => (
+const FallbackGlobe = ({ isMobile }: { isMobile: boolean }) => (
   <div className="absolute inset-0 flex items-center justify-center">
-    <div className="relative w-80 h-80 rounded-full border border-primary/20 opacity-30">
+    <div className={`relative ${isMobile ? 'w-48 h-48' : 'w-80 h-80'} rounded-full border border-primary/20 opacity-30`}>
       <div className="absolute inset-4 rounded-full border border-primary/15" />
       <div className="absolute inset-8 rounded-full border border-primary/10" />
       <div className="absolute inset-12 rounded-full border border-primary/5" />
@@ -52,17 +52,15 @@ const FallbackGlobe = () => (
 );
 
 interface GlobeProps {
-  scrollProgress: number;
   mousePosition: { x: number; y: number };
   isDragging: boolean;
   dragDelta: { x: number; y: number };
+  scale: number;
 }
 
-const Globe = ({ scrollProgress, mousePosition, isDragging, dragDelta }: GlobeProps) => {
-  const meshRef = useRef<THREE.Mesh>(null);
-  const pointsRef = useRef<THREE.Points>(null);
+const Globe = ({ mousePosition, isDragging, dragDelta, scale }: GlobeProps) => {
+  const groupRef = useRef<THREE.Group>(null);
   const rotationRef = useRef({ x: 0, y: 0 });
-  const { viewport } = useThree();
 
   // Create sphere points
   const particlesPosition = useMemo(() => {
@@ -117,7 +115,7 @@ const Globe = ({ scrollProgress, mousePosition, isDragging, dragDelta }: GlobePr
   }, []);
 
   useFrame((state) => {
-    if (meshRef.current && pointsRef.current) {
+    if (groupRef.current) {
       // Update rotation based on drag
       if (isDragging) {
         rotationRef.current.x += dragDelta.y * 0.01;
@@ -128,31 +126,27 @@ const Globe = ({ scrollProgress, mousePosition, isDragging, dragDelta }: GlobePr
       }
 
       // Apply rotation with smooth lerp
-      meshRef.current.rotation.y = THREE.MathUtils.lerp(
-        meshRef.current.rotation.y,
+      groupRef.current.rotation.y = THREE.MathUtils.lerp(
+        groupRef.current.rotation.y,
         rotationRef.current.y,
         0.1
       );
-      meshRef.current.rotation.x = THREE.MathUtils.lerp(
-        meshRef.current.rotation.x,
+      groupRef.current.rotation.x = THREE.MathUtils.lerp(
+        groupRef.current.rotation.x,
         rotationRef.current.x + mousePosition.y * 0.1,
         0.1
       );
-      
-      pointsRef.current.rotation.y = meshRef.current.rotation.y;
-      pointsRef.current.rotation.x = meshRef.current.rotation.x;
 
       // Subtle floating animation
       const floatY = Math.sin(state.clock.elapsedTime * 0.5) * 0.1;
-      meshRef.current.position.y = floatY;
-      pointsRef.current.position.y = floatY;
+      groupRef.current.position.y = floatY;
     }
   });
 
   return (
-    <>
+    <group ref={groupRef} scale={scale}>
       {/* Globe wireframe */}
-      <mesh ref={meshRef}>
+      <mesh>
         <sphereGeometry args={[2, 32, 32]} />
         <meshBasicMaterial 
           color="#ACC8A2" 
@@ -163,7 +157,7 @@ const Globe = ({ scrollProgress, mousePosition, isDragging, dragDelta }: GlobePr
       </mesh>
 
       {/* Particles on surface */}
-      <points ref={pointsRef}>
+      <points>
         <bufferGeometry>
           <bufferAttribute
             attach="attributes-position"
@@ -195,7 +189,7 @@ const Globe = ({ scrollProgress, mousePosition, isDragging, dragDelta }: GlobePr
           opacity={0.02} 
         />
       </mesh>
-    </>
+    </group>
   );
 };
 
@@ -205,6 +199,7 @@ export const GlobeSection = () => {
   const [isDragging, setIsDragging] = useState(false);
   const [dragDelta, setDragDelta] = useState({ x: 0, y: 0 });
   const [webGLSupported, setWebGLSupported] = useState(true);
+  const [isMobile, setIsMobile] = useState(false);
   const lastMousePos = useRef({ x: 0, y: 0 });
   
   const { scrollYProgress } = useScroll({
@@ -217,6 +212,13 @@ export const GlobeSection = () => {
 
   useEffect(() => {
     setWebGLSupported(isWebGLAvailable());
+    
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
   const handleMouseMove = (e: React.MouseEvent) => {
@@ -266,11 +268,11 @@ export const GlobeSection = () => {
       <div className="absolute inset-0 bg-gradient-to-b from-secondary via-secondary to-secondary" />
       
       {/* 3D Globe or Fallback */}
-      <div className="absolute inset-0 z-0">
+      <div className={`absolute z-0 ${isMobile ? 'inset-x-0 bottom-0 h-[45vh]' : 'inset-0'}`}>
         {webGLSupported ? (
-          <CanvasErrorBoundary fallback={<FallbackGlobe />}>
+          <CanvasErrorBoundary fallback={<FallbackGlobe isMobile={isMobile} />}>
             <Canvas
-              camera={{ position: [0, 0, 6], fov: 45 }}
+              camera={{ position: [0, 0, isMobile ? 7 : 6], fov: 45 }}
               dpr={[1, 1.5]}
               gl={{ 
                 antialias: false,
@@ -280,15 +282,15 @@ export const GlobeSection = () => {
             >
               <ambientLight intensity={0.5} />
               <Globe 
-                scrollProgress={0} 
                 mousePosition={mousePosition}
                 isDragging={isDragging}
                 dragDelta={dragDelta}
+                scale={isMobile ? 0.65 : 1}
               />
             </Canvas>
           </CanvasErrorBoundary>
         ) : (
-          <FallbackGlobe />
+          <FallbackGlobe isMobile={isMobile} />
         )}
       </div>
 
