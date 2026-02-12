@@ -99,7 +99,7 @@ export const CTASection = () => {
             className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-primary/20 border border-primary/30 mb-8"
           >
             <Sparkles className="h-4 w-4 text-primary" />
-            <span className="text-primary text-sm font-medium">Ready to make an impact?</span>
+            <span className="text-primary text-sm font-medium">Got a project in mind?</span>
           </motion.div>
 
           <motion.h2
@@ -108,9 +108,9 @@ export const CTASection = () => {
             transition={{ duration: 0.8, delay: 0.1 }}
             className="font-serif text-5xl md:text-6xl lg:text-7xl xl:text-8xl text-off-white mb-8 leading-[1.1]"
           >
-            Let's <span className="text-primary">Grow</span>
+            Let's <span className="text-primary">Talk</span>
             <br />
-            Together
+            About It
           </motion.h2>
 
           <motion.p
@@ -119,8 +119,8 @@ export const CTASection = () => {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="text-xl md:text-2xl text-off-white/60 mb-12 max-w-2xl mx-auto leading-relaxed"
           >
-            Ready to transform your business with sustainable technology? Start
-            your journey with us today.
+            Whether you have a clear brief or just a rough idea, 
+            we'd love to hear about it. No pitch, no pressure — just a conversation.
           </motion.p>
 
           <motion.div

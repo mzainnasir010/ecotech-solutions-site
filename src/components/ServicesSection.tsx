@@ -7,37 +7,37 @@ const services = [
     icon: Leaf,
     title: "Green Engineering",
     description:
-      "Revolutionary sustainable technology solutions that minimize environmental impact while maximizing efficiency and performance.",
+      "We redesign infrastructure so it runs cleaner without sacrificing speed. One client cut server costs 40% just by rethinking their architecture with us.",
   },
   {
     icon: Zap,
     title: "Clean Energy Systems",
     description:
-      "Cutting-edge renewable energy infrastructure designed to power the next generation of sustainable businesses.",
+      "We help businesses switch to renewables in a way that actually makes financial sense. No greenwashing, just real energy savings from day one.",
   },
   {
     icon: Recycle,
     title: "Circular Economy",
     description:
-      "Innovative waste reduction and resource recovery systems that transform industries into zero-waste operations.",
+      "That 'waste' your operation produces? We build systems that turn it into raw material for someone else. Zero waste isn't a dream — it's an engineering problem.",
   },
   {
     icon: Sun,
     title: "Solar Innovation",
     description:
-      "Next-generation photovoltaic solutions with unprecedented efficiency rates and seamless integration.",
+      "Our solar setups consistently hit 22%+ efficiency because we obsess over panel placement, inverter matching, and the boring details most firms skip.",
   },
   {
     icon: TreeDeciduous,
     title: "Carbon Solutions",
     description:
-      "Comprehensive carbon capture and offset programs backed by verified environmental science.",
+      "We track, measure, and offset carbon with verified science — not vague promises. You'll get a dashboard showing exactly where your emissions stand.",
   },
   {
     icon: Droplets,
     title: "Water Tech",
     description:
-      "Advanced water purification and conservation systems for sustainable resource management.",
+      "From factory floors to farming operations, we've built purification systems that cut water use by up to 35%. Every drop accounted for.",
   },
 ];
 
@@ -92,9 +92,9 @@ export const ServicesSection = () => {
               transition={{ duration: 0.8, delay: 0.1 }}
               className="font-serif text-4xl md:text-5xl lg:text-6xl xl:text-7xl text-foreground leading-[1.1]"
             >
-              Building a{" "}
-              <span className="text-primary">Greener</span>{" "}
-              Future Together
+              What We{" "}
+              <span className="text-primary">Actually</span>{" "}
+              Do
             </motion.h2>
             
             <motion.p
@@ -104,8 +104,8 @@ export const ServicesSection = () => {
               transition={{ duration: 0.8, delay: 0.2 }}
               className="text-lg text-muted-foreground max-w-xl lg:ml-auto"
             >
-              We combine cutting-edge technology with sustainable practices 
-              to create solutions that benefit both businesses and the environment.
+              Six areas where we've seen the biggest impact. 
+              Each one tested in the field, not just on a slide deck.
             </motion.p>
           </div>
         </div>

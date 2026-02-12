@@ -68,8 +68,8 @@ export const ContactSection = () => {
               Thank You!
             </h2>
             <p className="text-muted-foreground text-xl leading-relaxed">
-              Your message has been received. We'll be in touch soon to discuss
-              how we can help grow your sustainable technology vision.
+            Got it! Someone from our team will get back to you within 24 hours. 
+              Looking forward to hearing more about your project.
             </p>
           </motion.div>
         </div>
@@ -115,12 +115,12 @@ export const ContactSection = () => {
             <div className="w-12 h-[1px] bg-primary" />
           </div>
           <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl xl:text-7xl text-foreground mb-6">
-            Let's Start Your{" "}
-            <span className="text-primary">Green</span> Journey
+            Drop Us{" "}
+            <span className="text-primary">a Line</span>
           </h2>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Ready to transform your business with sustainable technology? Tell
-            us about your project.
+            Tell us what you're working on. We usually reply within a day 
+            and the first call is always free.
           </p>
         </motion.div>
 

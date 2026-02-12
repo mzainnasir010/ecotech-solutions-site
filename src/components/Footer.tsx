@@ -55,8 +55,8 @@ export const Footer = () => {
               <span className="font-serif text-xl text-off-white">EcoTech</span>
             </a>
             <p className="text-off-white/60 text-sm leading-relaxed mb-8 max-w-xs">
-              Pioneering sustainable technology that harmonizes innovation with
-              nature. Growing tomorrow's solutions today.
+              Clean tech studio based in SF, London, and Singapore. 
+              We build things that work for people and the planet.
             </p>
             <div className="flex gap-4">
               {[

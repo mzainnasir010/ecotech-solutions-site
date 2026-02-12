@@ -5,9 +5,9 @@ import { ArrowUpRight, ChevronLeft, ChevronRight } from "lucide-react";
 const projects = [
   {
     id: 1,
-    title: "Solar Grid Revolution",
+    title: "Midwest Solar Grid",
     category: "Clean Energy",
-    description: "A nationwide solar infrastructure project delivering clean energy to over 2 million homes across 15 states.",
+    description: "We wired up solar panels across 15 states for a utility company that was skeptical it could work at scale. It did — and now 2.4 million homes run on it.",
     stats: "2.4M+",
     statsLabel: "Homes Powered",
     image: "https://images.unsplash.com/photo-1509391366360-2e959784a276?q=80&w=2072&auto=format&fit=crop",
@@ -15,9 +15,9 @@ const projects = [
   },
   {
     id: 2,
-    title: "Ocean Plastic Initiative",
+    title: "Pacific Cleanup",
     category: "Circular Economy",
-    description: "Revolutionary ocean cleanup technology converting marine waste into sustainable materials for construction.",
+    description: "We built the barges and sorting systems that pull plastic from the Pacific and turn it into construction-grade material. 850K tons recovered so far.",
     stats: "850K",
     statsLabel: "Tons Recovered",
     image: "https://images.unsplash.com/photo-1484291470158-b8f8d608850d?q=80&w=2070&auto=format&fit=crop",
@@ -25,9 +25,9 @@ const projects = [
   },
   {
     id: 3,
-    title: "Urban Forest Network",
+    title: "City Canopy Project",
     category: "Carbon Solutions",
-    description: "Creating interconnected urban forests across major cities to combat climate change and improve air quality.",
+    description: "12 million trees planted across 40 cities. Not random planting — each location chosen using air quality data to maximize real impact on the neighborhoods that need it most.",
     stats: "12M",
     statsLabel: "Trees Planted",
     image: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?q=80&w=2071&auto=format&fit=crop",
@@ -35,9 +35,9 @@ const projects = [
   },
   {
     id: 4,
-    title: "Smart Water Systems",
+    title: "Factory Water Loop",
     category: "Water Tech",
-    description: "AI-powered water management reducing consumption by 40% across industrial facilities worldwide.",
+    description: "Factories waste a staggering amount of water. We built a closed-loop system for three manufacturing plants that cut their usage by 40% in the first year.",
     stats: "40%",
     statsLabel: "Water Saved",
     image: "https://images.unsplash.com/photo-1468421870903-4df1664ac249?q=80&w=2089&auto=format&fit=crop",
@@ -171,9 +171,9 @@ export const PortfolioSection = () => {
               </span>
             </div>
             <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl text-off-white leading-[1.1]">
-              Projects That{" "}
-              <span className="text-primary">Define</span>{" "}
-              Impact
+              Work We're{" "}
+              <span className="text-primary">Proud</span>{" "}
+              Of
             </h2>
           </div>
 

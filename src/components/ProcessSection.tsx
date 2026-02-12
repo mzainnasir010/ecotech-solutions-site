@@ -6,30 +6,30 @@ const processSteps = [
   {
     number: "01",
     title: "Discovery",
-    subtitle: "Understanding Your Vision",
+    subtitle: "We Listen First",
     description:
-      "We begin by deeply understanding your sustainability goals, operational challenges, and the unique opportunities within your industry. Our comprehensive analysis forms the foundation for transformative solutions.",
+      "We spend the first two weeks just asking questions. What's working, what's not, where the waste is. No pitch decks — just honest conversations with your team on the ground.",
   },
   {
     number: "02",
     title: "Strategy",
-    subtitle: "Crafting the Blueprint",
+    subtitle: "A Plan That Makes Sense",
     description:
-      "Our experts design a tailored roadmap that balances environmental impact with business objectives. Every strategy is backed by data, research, and proven methodologies.",
+      "We map out what to change and in what order. The goal is quick wins in the first 90 days while setting up bigger structural changes. Everything ties back to real numbers.",
   },
   {
     number: "03",
     title: "Implementation",
-    subtitle: "Bringing Ideas to Life",
+    subtitle: "Heads Down, Building",
     description:
-      "With precision engineering and sustainable practices, we transform concepts into reality. Our teams work seamlessly to deliver solutions that exceed expectations.",
+      "This is where we get our hands dirty. Our engineers embed with your team, ship iteratively, and don't disappear until the thing is running smoothly in production.",
   },
   {
     number: "04",
     title: "Optimization",
-    subtitle: "Continuous Evolution",
+    subtitle: "We Stick Around",
     description:
-      "Sustainability is an ongoing journey. We continuously monitor, measure, and optimize your solutions to ensure maximum impact and evolving excellence.",
+      "After launch, we keep measuring. Monthly check-ins, performance dashboards, and adjustments based on what the data actually shows — not what we hoped would happen.",
   },
 ];
 
@@ -78,9 +78,9 @@ export const ProcessSection = () => {
             transition={{ duration: 0.8, delay: 0.1 }}
             className="font-serif text-4xl md:text-5xl lg:text-6xl xl:text-7xl text-off-white leading-[1.1]"
           >
-            A Proven Path to{" "}
-            <span className="text-primary">Sustainable</span>{" "}
-            Excellence
+            How We{" "}
+            <span className="text-primary">Actually</span>{" "}
+            Work
           </motion.h2>
         </div>
 

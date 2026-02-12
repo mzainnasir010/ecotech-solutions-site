@@ -2,11 +2,11 @@ import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 
 const words = [
-  "We", "believe", "in", "a", "world", "where", "technology",
-  "and", "nature", "exist", "in", "perfect", "harmony.", 
-  "Our", "mission", "is", "to", "pioneer", "sustainable",
-  "solutions", "that", "protect", "our", "planet", "while",
-  "driving", "innovation", "forward."
+  "Most", "companies", "treat", "sustainability", "like",
+  "a", "checkbox.", "We", "think", "that's", "lazy.",
+  "Every", "project", "we", "take", "on", "has", "to",
+  "leave", "the", "world", "a", "little", "better",
+  "than", "we", "found", "it."
 ];
 
 export const MissionSection = () => {
