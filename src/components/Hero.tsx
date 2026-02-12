@@ -45,7 +45,7 @@ export const Hero = () => {
   return (
     <section
       ref={sectionRef}
-      className="relative min-h-[120vh] flex items-center justify-center overflow-hidden bg-secondary"
+      className="relative min-h-[120vh] flex items-center overflow-hidden bg-secondary"
     >
       {/* Gradient overlays */}
       <div className="absolute inset-0 bg-gradient-to-b from-secondary via-secondary/95 to-secondary z-10" />
@@ -77,9 +77,9 @@ export const Hero = () => {
       {/* Main Content */}
       <motion.div
         style={{ y: textY, opacity: textOpacity, scale }}
-        className="relative z-20 mx-auto px-6 lg:px-8 pt-32"
+        className="relative z-20 w-full px-6 lg:px-12 pt-32"
       >
-        <div className="max-w-[98vw]">
+        <div className="lg:max-w-[60%]">
           {/* Giant Typography */}
           <h1 className="font-serif text-[12vw] md:text-[10vw] lg:text-[9vw] font-medium leading-[0.9] tracking-[-0.03em] text-off-white overflow-hidden">
             {lines.map((line, lineIndex) => (
