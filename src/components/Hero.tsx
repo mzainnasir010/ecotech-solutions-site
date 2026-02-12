@@ -1,9 +1,11 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, lazy, Suspense } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { ArrowDown, Play } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { ParticleWave } from "./ParticleWave";
-import { HeroOrb } from "./HeroOrb";
+
+// Lazy load heavy 3D components
+const ParticleWave = lazy(() => import("./ParticleWave").then(m => ({ default: m.ParticleWave })));
+const HeroOrb = lazy(() => import("./HeroOrb").then(m => ({ default: m.HeroOrb })));
 
 export const Hero = () => {
   const [scrollProgress, setScrollProgress] = useState(0);
@@ -58,7 +60,9 @@ export const Hero = () => {
       />
 
       {/* 3D Particle Wave Background */}
-      <ParticleWave scrollProgress={scrollProgress} />
+      <Suspense fallback={null}>
+        <ParticleWave scrollProgress={scrollProgress} />
+      </Suspense>
 
       {/* Top bar with meta info */}
       <motion.div 
@@ -155,7 +159,9 @@ export const Hero = () => {
         transition={{ duration: 1.5, delay: 0.8, ease: [0.16, 1, 0.3, 1] }}
         className="absolute top-0 right-[-5%] w-[55%] h-full z-[15] hidden lg:block pointer-events-auto"
       >
-        <HeroOrb scrollProgress={scrollProgress} />
+        <Suspense fallback={null}>
+          <HeroOrb scrollProgress={scrollProgress} />
+        </Suspense>
       </motion.div>
 
       {/* Mobile Orb - behind text */}
@@ -165,7 +171,9 @@ export const Hero = () => {
         transition={{ duration: 1.5, delay: 1 }}
         className="absolute inset-0 z-[15] lg:hidden pointer-events-none"
       >
-        <HeroOrb scrollProgress={scrollProgress} />
+        <Suspense fallback={null}>
+          <HeroOrb scrollProgress={scrollProgress} />
+        </Suspense>
       </motion.div>
 
       {/* Scroll Indicator */}

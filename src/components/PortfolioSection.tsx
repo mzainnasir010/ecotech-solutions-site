@@ -149,6 +149,7 @@ export const PortfolioSection = () => {
             <img
               src={currentProject.image}
               alt={currentProject.title}
+              loading="lazy"
               className="w-full h-full object-cover"
             />
           </motion.div>
@@ -264,6 +265,7 @@ export const PortfolioSection = () => {
                   <img
                     src={currentProject.image}
                     alt={currentProject.title}
+                    loading="lazy"
                     className="w-full h-full object-cover"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-secondary/60 via-transparent to-transparent" />
