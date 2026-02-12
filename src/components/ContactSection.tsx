@@ -124,16 +124,16 @@ export const ContactSection = () => {
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-5 gap-16 lg:gap-12">
+        <div className="grid grid-cols-1 lg:grid-cols-5 gap-16 lg:gap-12 items-stretch">
           {/* Contact Info Cards */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -30 }}
             transition={{ duration: 0.8, delay: 0.1 }}
-            className="lg:col-span-2 space-y-6"
+            className="lg:col-span-2 flex flex-col gap-6"
           >
             {/* Email Card */}
-            <div className="group p-8 rounded-2xl border border-border bg-card hover:border-primary/30 hover:bg-card/80 transition-all duration-500">
+            <div className="group p-8 rounded-2xl border border-border bg-card hover:border-primary/30 hover:bg-card/80 transition-all duration-500 flex-1">
               <div className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
                 <Mail className="h-6 w-6 text-primary" />
               </div>
@@ -148,7 +148,7 @@ export const ContactSection = () => {
             </div>
 
             {/* Location Card */}
-            <div className="group p-8 rounded-2xl border border-border bg-card hover:border-primary/30 hover:bg-card/80 transition-all duration-500">
+            <div className="group p-8 rounded-2xl border border-border bg-card hover:border-primary/30 hover:bg-card/80 transition-all duration-500 flex-1">
               <div className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
                 <MapPin className="h-6 w-6 text-primary" />
               </div>
