@@ -8,7 +8,7 @@ const processSteps = [
     title: "Discovery",
     subtitle: "We Listen First",
     description:
-      "We spend the first two weeks just asking questions. What's working, what's not, where the waste is. No pitch decks — just honest conversations with your team on the ground.",
+      "We spend the first two weeks just asking questions. What's working, what's not, where the waste is. No pitch decks - just honest conversations with your team on the ground.",
   },
   {
     number: "02",
@@ -29,7 +29,7 @@ const processSteps = [
     title: "Optimization",
     subtitle: "We Stick Around",
     description:
-      "After launch, we keep measuring. Monthly check-ins, performance dashboards, and adjustments based on what the data actually shows — not what we hoped would happen.",
+      "After launch, we keep measuring. Monthly check-ins, performance dashboards, and adjustments based on what the data actually shows - not what we hoped would happen.",
   },
 ];
 

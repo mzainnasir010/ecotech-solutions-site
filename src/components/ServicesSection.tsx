@@ -19,7 +19,7 @@ const services = [
     icon: Recycle,
     title: "Circular Economy",
     description:
-      "That 'waste' your operation produces? We build systems that turn it into raw material for someone else. Zero waste isn't a dream — it's an engineering problem.",
+      "That 'waste' your operation produces? We build systems that turn it into raw material for someone else. Zero waste isn't a dream - it's an engineering problem.",
   },
   {
     icon: Sun,
@@ -31,7 +31,7 @@ const services = [
     icon: TreeDeciduous,
     title: "Carbon Solutions",
     description:
-      "We track, measure, and offset carbon with verified science — not vague promises. You'll get a dashboard showing exactly where your emissions stand.",
+      "We track, measure, and offset carbon with verified science - not vague promises. You'll get a dashboard showing exactly where your emissions stand.",
   },
   {
     icon: Droplets,
