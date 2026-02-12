@@ -77,7 +77,7 @@ export const Hero = () => {
       {/* Main Content */}
       <motion.div
         style={{ y: textY, opacity: textOpacity, scale }}
-        className="relative z-20 w-full px-6 lg:px-12 pt-32"
+        className="relative z-20 w-full px-6 lg:px-12 pt-16 lg:pt-24"
       >
         <div className="lg:max-w-[60%]">
           {/* Giant Typography */}
