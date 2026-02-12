@@ -124,7 +124,7 @@ const WaveParticles = () => {
         />
       </bufferGeometry>
       <pointsMaterial
-        size={0.12}
+        size={0.16}
         vertexColors
         transparent
         opacity={1}
