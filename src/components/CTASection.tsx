@@ -48,9 +48,9 @@ export const CTASection = () => {
         />
       </motion.div>
 
-      {/* Floating particles */}
+      {/* Floating particles - reduced count for performance */}
       <div className="absolute inset-0 overflow-hidden">
-        {[...Array(30)].map((_, i) => (
+        {[...Array(12)].map((_, i) => (
           <motion.div
             key={i}
             className="absolute rounded-full bg-primary/20"
