@@ -5,21 +5,21 @@ import { Quote } from "lucide-react";
 const testimonials = [
   {
     quote:
-      "EcoTech transformed our entire digital infrastructure. We reduced our carbon footprint by 60% while actually improving performance. It's the rare case where doing good for the planet also meant doing good for business.",
+      "I'll be honest — I didn't think we could cut emissions and speed up our servers at the same time. EcoTech proved me wrong. Our infra costs dropped 40% and our carbon numbers are actually something I'm proud to share now.",
     author: "Michael Thompson",
     title: "CTO, GreenVentures Capital",
     initials: "MT",
   },
   {
     quote:
-      "Their sustainable approach to software development opened our eyes to what's possible. The wildlife monitoring system they built has helped us protect over 200 endangered species.",
+      "They built us a wildlife tracking system that runs on solar-powered sensors in the bush. It's been two years and we've tagged 200+ species with it. The tech just works, even in places with zero infrastructure.",
     author: "David Williams",
     title: "Director, African Wildlife Foundation",
     initials: "DW",
   },
   {
     quote:
-      "Working with EcoTech was a revelation. They showed us that sustainable technology isn't just an option—it's the future. Our platform now runs on 100% renewable energy.",
+      "We switched our entire platform to renewables with their help. I expected a painful migration — it took three weeks. Three. Our team barely noticed the change, but our energy bill definitely did.",
     author: "Jennifer Martinez",
     title: "Founder, SustainableAg",
     initials: "JM",

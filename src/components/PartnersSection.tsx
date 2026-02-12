@@ -39,7 +39,7 @@ export const PartnersSection = () => {
         >
           <div className="w-12 h-[1px] bg-primary" />
           <span className="text-sm font-medium text-primary uppercase tracking-[0.2em]">
-            Trusted By Industry Leaders
+            Companies We've Worked With
           </span>
           <div className="w-12 h-[1px] bg-primary" />
         </motion.div>

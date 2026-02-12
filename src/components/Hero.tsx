@@ -37,9 +37,9 @@ export const Hero = () => {
 
   // Split headline for animation
   const lines = [
-    { text: "SUSTAINABLE", delay: 0 },
-    { text: "TECHNOLOGY", delay: 0.1 },
-    { text: "FOR TOMORROW", delay: 0.2 },
+    { text: "TECH THAT", delay: 0 },
+    { text: "WORKS WITH", delay: 0.1 },
+    { text: "THE PLANET", delay: 0.2 },
   ];
 
   return (
@@ -68,9 +68,9 @@ export const Hero = () => {
         className="absolute top-24 left-0 right-0 z-20 px-6 lg:px-12"
       >
         <div className="container mx-auto flex justify-between items-center text-off-white/60 text-sm tracking-wide">
-          <span>Sustainable Innovation</span>
-          <span>Based Globally</span>
-          <span className="hidden md:block">Est. 2024</span>
+          <span>Clean Tech Studio</span>
+          <span>SF · London · Singapore</span>
+          <span className="hidden md:block">Since 2024</span>
         </div>
       </motion.div>
 
@@ -124,8 +124,8 @@ export const Hero = () => {
             className="mt-12 md:mt-16 flex flex-col md:flex-row md:items-end md:justify-between gap-8"
           >
             <p className="text-lg md:text-xl lg:text-2xl text-off-white/70 font-light max-w-xl leading-relaxed">
-              Pioneering the intersection of innovation and nature. 
-              We build technology that harmonizes progress with our planet's future.
+              We're a team of engineers who got tired of tech that ignores the environment. 
+              So we build the kind that doesn't.
             </p>
 
             <div className="flex items-center gap-4">
@@ -189,7 +189,7 @@ export const Hero = () => {
 
       {/* Decorative corner elements */}
       <div className="absolute top-24 right-6 lg:right-12 z-20 text-off-white/30 text-xs tracking-widest hidden lg:block">
-        <div className="rotate-90 origin-right">NATURE × TECH</div>
+        <div className="rotate-90 origin-right">BUILD DIFFERENT</div>
       </div>
     </section>
   );

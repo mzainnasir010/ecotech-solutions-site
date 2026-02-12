@@ -309,15 +309,15 @@ export const GlobeSection = () => {
             </div>
             
             <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl text-off-white leading-[1.1] mb-8">
-              Impact That{" "}
-              <span className="text-primary">Spans</span>{" "}
-              The Globe
+              We Go{" "}
+              <span className="text-primary">Where</span>{" "}
+              The Work Is
             </h2>
             
             <p className="text-off-white/60 text-lg leading-relaxed mb-12 max-w-lg">
-              From renewable energy installations in remote villages to carbon-neutral 
-              data centers in major cities, our solutions are making a difference 
-              across every continent.
+              Solar farms in rural Kenya. Water systems in São Paulo factories. 
+              A carbon-neutral data center in Oslo. We're not everywhere — 
+              but we're in the places that matter.
             </p>
 
             {/* Location cards */}

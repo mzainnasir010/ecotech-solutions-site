@@ -41,9 +41,9 @@ export const TextRevealSection = () => {
             className="overflow-hidden"
           >
             <h2 className="font-serif text-5xl md:text-7xl lg:text-8xl xl:text-9xl text-foreground leading-[0.9]">
-              The future is
+              Not less harm.
               <br />
-              <span className="text-primary">regenerative</span>
+              <span className="text-primary">More good.</span>
             </h2>
           </motion.div>
 
@@ -54,8 +54,8 @@ export const TextRevealSection = () => {
             transition={{ delay: 0.3, duration: 0.8 }}
             className="mt-12 text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto"
           >
-            We're not just reducing harm—we're actively restoring ecosystems 
-            and creating positive environmental impact.
+            We design systems that put back more than they take. 
+            That's not a tagline — it's how we measure every project.
           </motion.p>
 
           {/* Floating elements */}
