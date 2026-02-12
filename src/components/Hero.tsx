@@ -77,9 +77,9 @@ export const Hero = () => {
       {/* Main Content */}
       <motion.div
         style={{ y: textY, opacity: textOpacity, scale }}
-        className="container relative z-20 mx-auto px-6 lg:px-12 pt-32"
+        className="relative z-20 mx-auto px-6 lg:px-8 pt-32"
       >
-        <div className="max-w-[95vw] mx-auto">
+        <div className="max-w-[98vw]">
           {/* Giant Typography */}
           <h1 className="font-serif text-[12vw] md:text-[10vw] lg:text-[9vw] font-medium leading-[0.9] tracking-[-0.03em] text-off-white overflow-hidden">
             {lines.map((line, lineIndex) => (
