@@ -268,7 +268,7 @@ export const GlobeSection = () => {
       <div className="absolute inset-0 bg-gradient-to-b from-secondary via-secondary to-secondary" />
       
       {/* 3D Globe or Fallback */}
-      <div className={`absolute z-0 ${isMobile ? 'inset-x-0 -bottom-[10px] h-[45vh]' : 'inset-0'}`}>
+      <div className="absolute inset-0 z-0">
         {webGLSupported ? (
           <CanvasErrorBoundary fallback={<FallbackGlobe isMobile={isMobile} />}>
             <Canvas
