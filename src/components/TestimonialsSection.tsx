@@ -6,23 +6,23 @@ const testimonials = [
   {
     quote:
       "EcoTech transformed our entire digital infrastructure. We reduced our carbon footprint by 60% while actually improving performance. It's the rare case where doing good for the planet also meant doing good for business.",
-    author: "Sarah Chen",
+    author: "Michael Thompson",
     title: "CTO, GreenVentures Capital",
-    avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200&q=80",
+    initials: "MT",
   },
   {
     quote:
       "Their sustainable approach to software development opened our eyes to what's possible. The wildlife monitoring system they built has helped us protect over 200 endangered species.",
-    author: "Dr. James Mwangi",
+    author: "David Williams",
     title: "Director, African Wildlife Foundation",
-    avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&q=80",
+    initials: "DW",
   },
   {
     quote:
       "Working with EcoTech was a revelation. They showed us that sustainable technology isn't just an option—it's the future. Our platform now runs on 100% renewable energy.",
-    author: "Elena Rodriguez",
+    author: "Jennifer Martinez",
     title: "Founder, SustainableAg",
-    avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=200&q=80",
+    initials: "JM",
   },
 ];
 
@@ -86,11 +86,11 @@ export const TestimonialsSection = () => {
 
               {/* Author */}
               <div className="flex items-center justify-center gap-4">
-                <img
-                  src={testimonials[currentIndex].avatar}
-                  alt={testimonials[currentIndex].author}
-                  className="w-16 h-16 rounded-full object-cover border-2 border-primary"
-                />
+                <div className="w-16 h-16 rounded-full border-2 border-primary bg-primary/10 flex items-center justify-center">
+                  <span className="text-primary font-semibold text-lg">
+                    {testimonials[currentIndex].initials}
+                  </span>
+                </div>
                 <div className="text-left">
                   <div className="font-semibold text-foreground">
                     {testimonials[currentIndex].author}
