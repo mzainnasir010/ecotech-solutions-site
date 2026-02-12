@@ -79,86 +79,83 @@ export const Hero = () => {
         style={{ y: textY, opacity: textOpacity, scale }}
         className="container relative z-20 mx-auto px-6 lg:px-12 pt-32"
       >
-        <div className="max-w-[95vw] mx-auto flex flex-col lg:flex-row lg:items-center lg:gap-8">
-          {/* Left: Text content */}
-          <div className="flex-1 min-w-0">
-            {/* Giant Typography */}
-            <h1 className="font-serif text-[12vw] md:text-[10vw] lg:text-[7vw] font-medium leading-[0.9] tracking-[-0.03em] text-off-white overflow-hidden">
-              {lines.map((line, lineIndex) => (
-                <div key={lineIndex} className="overflow-hidden">
-                  <motion.div
-                    initial={{ y: "100%" }}
-                    animate={{ y: 0 }}
-                    transition={{
-                      duration: 1.2,
-                      delay: line.delay + 0.3,
-                      ease: [0.16, 1, 0.3, 1],
-                    }}
-                    className="flex"
-                  >
-                    {line.text.split("").map((char, charIndex) => (
-                      <motion.span
-                        key={charIndex}
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{
-                          duration: 0.5,
-                          delay: line.delay + 0.8 + charIndex * 0.02,
-                        }}
-                        className="inline-block"
-                        style={{ 
-                          textShadow: "0 0 80px hsl(var(--primary) / 0.3)",
-                        }}
-                      >
-                        {char === " " ? "\u00A0" : char}
-                      </motion.span>
-                    ))}
-                  </motion.div>
-                </div>
-              ))}
-            </h1>
-
-            {/* Subheadline and CTA row */}
-            <motion.div
-              initial={{ opacity: 0, y: 40 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1, delay: 1.2, ease: [0.16, 1, 0.3, 1] }}
-              className="mt-12 md:mt-16 flex flex-col md:flex-row md:items-end md:justify-between gap-8"
-            >
-              <p className="text-lg md:text-xl lg:text-2xl text-off-white/70 font-light max-w-xl leading-relaxed">
-                Pioneering the intersection of innovation and nature. 
-                We build technology that harmonizes progress with our planet's future.
-              </p>
-
-              <div className="flex items-center gap-4">
-                <Button
-                  onClick={scrollToServices}
-                  className="group rounded-full bg-primary px-8 py-6 text-base font-semibold text-secondary hover:bg-sage-light transition-all duration-500 hover:scale-105"
-                  style={{
-                    boxShadow: "0 8px 40px hsl(var(--primary) / 0.4)",
+        <div className="max-w-[95vw] mx-auto">
+          {/* Giant Typography */}
+          <h1 className="font-serif text-[12vw] md:text-[10vw] lg:text-[9vw] font-medium leading-[0.9] tracking-[-0.03em] text-off-white overflow-hidden">
+            {lines.map((line, lineIndex) => (
+              <div key={lineIndex} className="overflow-hidden">
+                <motion.div
+                  initial={{ y: "100%" }}
+                  animate={{ y: 0 }}
+                  transition={{
+                    duration: 1.2,
+                    delay: line.delay + 0.3,
+                    ease: [0.16, 1, 0.3, 1],
                   }}
+                  className="flex"
                 >
-                  Explore Our Work
-                  <ArrowDown className="ml-2 h-5 w-5 transition-transform group-hover:translate-y-1" />
-                </Button>
-                
-                <button className="group flex items-center justify-center w-14 h-14 rounded-full border border-off-white/30 text-off-white/80 hover:bg-off-white/10 hover:border-off-white/50 transition-all duration-300">
-                  <Play className="h-5 w-5 transition-transform group-hover:scale-110" />
-                </button>
+                  {line.text.split("").map((char, charIndex) => (
+                    <motion.span
+                      key={charIndex}
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{
+                        duration: 0.5,
+                        delay: line.delay + 0.8 + charIndex * 0.02,
+                      }}
+                      className="inline-block"
+                      style={{ 
+                        textShadow: "0 0 80px hsl(var(--primary) / 0.3)",
+                      }}
+                    >
+                      {char === " " ? "\u00A0" : char}
+                    </motion.span>
+                  ))}
+                </motion.div>
               </div>
-            </motion.div>
-          </div>
+            ))}
+          </h1>
 
-          {/* Right: 3D Orb */}
+          {/* Subheadline and CTA row */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1.5, delay: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="hidden lg:block w-[55%] h-[75vh] flex-shrink-0 -mr-20"
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, delay: 1.2, ease: [0.16, 1, 0.3, 1] }}
+            className="mt-12 md:mt-16 flex flex-col md:flex-row md:items-end md:justify-between gap-8"
           >
-            <HeroOrb scrollProgress={scrollProgress} />
+            <p className="text-lg md:text-xl lg:text-2xl text-off-white/70 font-light max-w-xl leading-relaxed">
+              Pioneering the intersection of innovation and nature. 
+              We build technology that harmonizes progress with our planet's future.
+            </p>
+
+            <div className="flex items-center gap-4">
+              <Button
+                onClick={scrollToServices}
+                className="group rounded-full bg-primary px-8 py-6 text-base font-semibold text-secondary hover:bg-sage-light transition-all duration-500 hover:scale-105"
+                style={{
+                  boxShadow: "0 8px 40px hsl(var(--primary) / 0.4)",
+                }}
+              >
+                Explore Our Work
+                <ArrowDown className="ml-2 h-5 w-5 transition-transform group-hover:translate-y-1" />
+              </Button>
+              
+              <button className="group flex items-center justify-center w-14 h-14 rounded-full border border-off-white/30 text-off-white/80 hover:bg-off-white/10 hover:border-off-white/50 transition-all duration-300">
+                <Play className="h-5 w-5 transition-transform group-hover:scale-110" />
+              </button>
+            </div>
           </motion.div>
         </div>
+      </motion.div>
+
+      {/* Desktop Orb - absolute positioned on the right */}
+      <motion.div
+        initial={{ opacity: 0, scale: 0.8 }}
+        animate={{ opacity: 0.7, scale: 1 }}
+        transition={{ duration: 1.5, delay: 0.8, ease: [0.16, 1, 0.3, 1] }}
+        className="absolute top-0 right-[-5%] w-[55%] h-full z-[15] hidden lg:block pointer-events-auto"
+      >
+        <HeroOrb scrollProgress={scrollProgress} />
       </motion.div>
 
       {/* Mobile Orb - behind text */}
