@@ -55,15 +55,17 @@ export const ServicesSection = () => {
     <section
       id="services"
       ref={sectionRef}
-      className="relative py-32 md:py-40 lg:py-48 bg-background overflow-hidden"
+      className="relative py-32 md:py-40 lg:py-48 overflow-hidden"
+      style={{ background: 'linear-gradient(180deg, hsl(80 15% 90%) 0%, hsl(60 10% 93%) 50%, hsl(80 15% 90%) 100%)' }}
     >
       {/* Subtle background gradient */}
       <motion.div 
-        className="absolute inset-0 opacity-30"
+        className="absolute inset-0 opacity-40"
         style={{ y: backgroundY }}
       >
-        <div className="absolute top-0 right-0 w-[600px] h-[600px] rounded-full blur-[150px] bg-primary/20" />
-        <div className="absolute bottom-0 left-0 w-[400px] h-[400px] rounded-full blur-[100px] bg-sage-light/20" />
+        <div className="absolute top-0 right-0 w-[600px] h-[600px] rounded-full blur-[150px] bg-primary/25" />
+        <div className="absolute bottom-0 left-0 w-[400px] h-[400px] rounded-full blur-[100px] bg-sage-light/25" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full blur-[200px] bg-primary/10" />
       </motion.div>
 
       <div className="container relative z-10 mx-auto px-6 lg:px-12">
