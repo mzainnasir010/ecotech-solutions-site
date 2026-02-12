@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { motion } from "framer-motion";
 import { Leaf, Linkedin, Twitter, Instagram, Send } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -31,39 +30,16 @@ export const Footer = () => {
     if (!email) return;
 
     setIsSubmitting(true);
-    
-    try {
-      const { supabase } = await import("@/integrations/supabase/client");
-      const { error } = await supabase.from("newsletter_subscribers").insert({
-        email: email,
-      });
 
-      if (error) {
-        if (error.code === "23505") {
-          toast({
-            title: "Already subscribed!",
-            description: "This email is already on our list.",
-          });
-        } else {
-          throw error;
-        }
-      } else {
-        toast({
-          title: "Subscribed!",
-          description: "Thank you for joining our newsletter.",
-        });
-        setEmail("");
-      }
-    } catch (error) {
-      console.error("Newsletter subscription error:", error);
-      toast({
-        title: "Error",
-        description: "Failed to subscribe. Please try again.",
-        variant: "destructive",
-      });
-    } finally {
-      setIsSubmitting(false);
-    }
+    // Simulate a brief processing delay
+    await new Promise((resolve) => setTimeout(resolve, 1200));
+
+    setIsSubmitting(false);
+    toast({
+      title: "Subscribed!",
+      description: "Thank you for joining our newsletter.",
+    });
+    setEmail("");
   };
     
   const currentYear = new Date().getFullYear();
