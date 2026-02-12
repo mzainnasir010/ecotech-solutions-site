@@ -285,7 +285,7 @@ export const GlobeSection = () => {
                 mousePosition={mousePosition}
                 isDragging={isDragging}
                 dragDelta={dragDelta}
-                scale={isMobile ? 0.65 : 1}
+                scale={isMobile ? 0.5 : 1}
               />
             </Canvas>
           </CanvasErrorBoundary>
