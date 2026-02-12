@@ -1,6 +1,12 @@
 import { lazy, Suspense } from "react";
 import { Navigation } from "@/components/Navigation";
 import { Hero } from "@/components/Hero";
+import {
+  PortfolioSkeleton,
+  GlobeSkeleton,
+  TestimonialsSkeleton,
+  ContactSkeleton,
+} from "@/components/skeletons/SectionSkeletons";
 
 // Lazy load below-the-fold sections
 const MissionSection = lazy(() => import("@/components/MissionSection").then(m => ({ default: m.MissionSection })));
@@ -16,7 +22,7 @@ const ContactSection = lazy(() => import("@/components/ContactSection").then(m =
 const CTASection = lazy(() => import("@/components/CTASection").then(m => ({ default: m.CTASection })));
 const Footer = lazy(() => import("@/components/Footer").then(m => ({ default: m.Footer })));
 
-// Minimal loading placeholder that matches section height
+// Minimal fallback for lightweight sections
 const SectionFallback = () => <div className="min-h-[50vh]" />;
 
 const Index = () => {
@@ -36,10 +42,10 @@ const Index = () => {
       <Suspense fallback={<SectionFallback />}>
         <ProcessSection />
       </Suspense>
-      <Suspense fallback={<SectionFallback />}>
+      <Suspense fallback={<PortfolioSkeleton />}>
         <PortfolioSection />
       </Suspense>
-      <Suspense fallback={<SectionFallback />}>
+      <Suspense fallback={<GlobeSkeleton />}>
         <GlobeSection />
       </Suspense>
       <Suspense fallback={<SectionFallback />}>
@@ -48,10 +54,10 @@ const Index = () => {
       <Suspense fallback={<SectionFallback />}>
         <StatsSection />
       </Suspense>
-      <Suspense fallback={<SectionFallback />}>
+      <Suspense fallback={<TestimonialsSkeleton />}>
         <TestimonialsSection />
       </Suspense>
-      <Suspense fallback={<SectionFallback />}>
+      <Suspense fallback={<ContactSkeleton />}>
         <ContactSection />
       </Suspense>
       <Suspense fallback={<SectionFallback />}>
