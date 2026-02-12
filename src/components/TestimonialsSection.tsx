@@ -5,7 +5,7 @@ import { Quote } from "lucide-react";
 const testimonials = [
   {
     quote:
-      "I'll be honest — I didn't think we could cut emissions and speed up our servers at the same time. EcoTech proved me wrong. Our infra costs dropped 40% and our carbon numbers are actually something I'm proud to share now.",
+      "I'll be honest - I didn't think we could cut emissions and speed up our servers at the same time. EcoTech proved me wrong. Our infra costs dropped 40% and our carbon numbers are actually something I'm proud to share now.",
     author: "Michael Thompson",
     title: "CTO, GreenVentures Capital",
     initials: "MT",
@@ -19,7 +19,7 @@ const testimonials = [
   },
   {
     quote:
-      "We switched our entire platform to renewables with their help. I expected a painful migration — it took three weeks. Three. Our team barely noticed the change, but our energy bill definitely did.",
+      "We switched our entire platform to renewables with their help. I expected a painful migration - it took three weeks. Three. Our team barely noticed the change, but our energy bill definitely did.",
     author: "Jennifer Martinez",
     title: "Founder, SustainableAg",
     initials: "JM",

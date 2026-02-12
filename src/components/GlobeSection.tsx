@@ -316,7 +316,7 @@ export const GlobeSection = () => {
             
             <p className="text-off-white/60 text-lg leading-relaxed mb-12 max-w-lg">
               Solar farms in rural Kenya. Water systems in São Paulo factories. 
-              A carbon-neutral data center in Oslo. We're not everywhere — 
+              A carbon-neutral data center in Oslo. We're not everywhere - 
               but we're in the places that matter.
             </p>
 

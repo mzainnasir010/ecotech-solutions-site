@@ -120,7 +120,7 @@ export const CTASection = () => {
             className="text-xl md:text-2xl text-off-white/60 mb-12 max-w-2xl mx-auto leading-relaxed"
           >
             Whether you have a clear brief or just a rough idea, 
-            we'd love to hear about it. No pitch, no pressure — just a conversation.
+            we'd love to hear about it. No pitch, no pressure - just a conversation.
           </motion.p>
 
           <motion.div

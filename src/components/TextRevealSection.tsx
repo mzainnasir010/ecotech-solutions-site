@@ -55,7 +55,7 @@ export const TextRevealSection = () => {
             className="mt-12 text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto"
           >
             We design systems that put back more than they take. 
-            That's not a tagline — it's how we measure every project.
+            That's not a tagline - it's how we measure every project.
           </motion.p>
 
           {/* Floating elements */}
