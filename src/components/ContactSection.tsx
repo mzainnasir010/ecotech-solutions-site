@@ -184,9 +184,9 @@ export const ContactSection = () => {
             initial={{ opacity: 0, x: 30 }}
             animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 30 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="lg:col-span-3"
+            className="lg:col-span-3 flex flex-col"
           >
-            <form onSubmit={handleSubmit} className="p-8 md:p-12 rounded-3xl border border-border bg-card/50 backdrop-blur-sm">
+            <form onSubmit={handleSubmit} className="p-8 md:p-12 rounded-3xl border border-border bg-card/50 backdrop-blur-sm flex-1 flex flex-col">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                 <div>
                   <label htmlFor="name" className="block text-sm font-medium text-foreground mb-3">
@@ -233,7 +233,7 @@ export const ContactSection = () => {
                 />
               </div>
 
-              <div className="mb-8">
+              <div className="mb-8 flex-1 flex flex-col">
                 <label htmlFor="message" className="block text-sm font-medium text-foreground mb-3">
                   Your Message *
                 </label>
@@ -245,7 +245,7 @@ export const ContactSection = () => {
                   placeholder="Tell us about your project and sustainability goals..."
                   required
                   rows={6}
-                  className="bg-background border-border resize-none text-base"
+                  className="bg-background border-border resize-none text-base flex-1"
                 />
               </div>
 
