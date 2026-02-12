@@ -154,7 +154,7 @@ export const Hero = () => {
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 1.5, delay: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="hidden lg:block w-[45%] h-[60vh] flex-shrink-0"
+            className="hidden lg:block w-[55%] h-[75vh] flex-shrink-0 -mr-20"
           >
             <HeroOrb scrollProgress={scrollProgress} />
           </motion.div>
