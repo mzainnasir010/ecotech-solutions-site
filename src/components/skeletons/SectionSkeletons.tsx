@@ -66,22 +66,20 @@ export const TestimonialsSkeleton = () => (
 );
 
 export const ContactSkeleton = () => (
-  <section className="py-32 md:py-40 bg-background px-6 lg:px-12">
+  <section className="min-h-screen bg-background py-20 md:py-28 px-6 lg:px-12">
     <div className="container mx-auto">
-      <div className="text-center mb-20">
+      <div className="text-center mb-16">
         <Skeleton className="h-4 w-28 mx-auto mb-8 bg-muted/40" />
         <Skeleton className="h-14 w-[50%] mx-auto mb-6 bg-muted/40" />
         <Skeleton className="h-6 w-[40%] mx-auto bg-muted/40" />
       </div>
-      <div className="grid grid-cols-1 lg:grid-cols-5 gap-16 lg:gap-12">
-        <div className="lg:col-span-2 flex flex-col gap-6">
-          <Skeleton className="h-40 rounded-2xl bg-muted/40" />
-          <Skeleton className="h-40 rounded-2xl bg-muted/40" />
-          <Skeleton className="h-24 rounded-2xl bg-muted/40" />
+      <div className="grid lg:grid-cols-2 gap-12 lg:gap-16">
+        <div className="space-y-6">
+          {[...Array(3)].map((_, i) => (
+            <Skeleton key={i} className="h-32 rounded-2xl bg-muted/40" />
+          ))}
         </div>
-        <div className="lg:col-span-3">
-          <Skeleton className="h-[500px] rounded-3xl bg-muted/40" />
-        </div>
+        <Skeleton className="h-[420px] rounded-3xl bg-muted/40" />
       </div>
     </div>
   </section>
